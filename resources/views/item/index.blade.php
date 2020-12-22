@@ -9,7 +9,7 @@
                             <div class="panel-body">
                             
                             
-                                <a href="{{ url("item/create") }}" class="btn btn-success btn-sm" title="Add New item">
+                                <a href="{{ url("item/store") }}" class="btn btn-success btn-sm" title="Add New item">
                                     Add New
                                 </a>
 
@@ -34,7 +34,7 @@
                                 <div class="table-responsive">
                                     <table class="table table-borderless">
                                         <thead>
-                                            <tr><th>id</th><th>itemCode</th><th>url</th><th>img</th><th>price</th><th>genreId</th><th>genreName</th><th>colorId</th><th>colorName</th><th>shopName</th><th>shopUrl</th><th>itemName</th><th>caption</th></tr>
+                                            <tr><th>id</th><th>itemCode</th><th>img</th><th>genreId</th><th>colorId</th><th>caption</th></tr>
                                         </thead>
                                         <tbody>
                                         @foreach($item as $item)
@@ -43,29 +43,16 @@
 
                                             <td>{{ $item->id}} </td>
 
-                                            <td>{{ $item->itemCode}} </td>
+                                            <td style="font-size:5px">{{ $item->itemCode}} <br>{{ $item->itemName}}<br><a href="{{ $item->shopUrl}}">{{ $item->shopName}}</a></td>
+                                            
+                                            <td><a href="{{ $item->url}}"><image src="{{ $item->img}}" style="width:70px"><br>{{ $item->price}}</a></td>
 
-                                            <td>{{ $item->url}} </td>
+                                            <td>{{ $item->genreId}} <br>{{ $item->genreName}}</td>
 
-                                            <td>{{ $item->img}} </td>
+ 
+                                            <td>{{ $item->colorId}} <br>{{ $item->colorName}}</td>
 
-                                            <td>{{ $item->price}} </td>
-
-                                            <td>{{ $item->genreId}} </td>
-
-                                            <td>{{ $item->genreName}} </td>
-
-                                            <td>{{ $item->colorId}} </td>
-
-                                            <td>{{ $item->colorName}} </td>
-
-                                            <td>{{ $item->shopName}} </td>
-
-                                            <td>{{ $item->shopUrl}} </td>
-
-                                            <td>{{ $item->itemName}} </td>
-
-                                            <td>{{ $item->caption}} </td>
+                                            <td style="font-size:5px">{{ $item->caption}} </td>
   
                                                 <td><a href="{{ url("/item/" . $item->id) }}" title="View item"><button class="btn btn-info btn-xs">View</button></a></td>
                                                 <td><a href="{{ url("/item/" . $item->id . "/edit") }}" title="Edit item"><button class="btn btn-primary btn-xs">Edit</button></a></td>
@@ -84,9 +71,7 @@
                                         @endforeach
                                         </tbody>
                                     </table>
-<div class="pagination-wrapper"> {!! $item->appends(["search" => Request::get("search")])->render() !!} </div>
-                                </div>
-                                
+
 
                             </div>
                         </div>

@@ -57,7 +57,7 @@
 
                                             <td><a href="{{ $item->url6}}"><image src="{{ $item->img6}}" style="width:70px"><br>{{ $item->price6}}</a></td>
 
-                             <td><a href="{{ url("/post/" . $item->id) }}" title="View post"><button class="btn btn-info btn-xs">View</button></a></td>
+                             <td><a href="{{ url("/post/" . $item->uid) }}" title="View post"><button class="btn btn-info btn-xs">View</button></a></td>
                                                 <td><a href="{{ url("/post/" . $item->id . "/edit") }}" title="Edit post"><button class="btn btn-primary btn-xs">Edit</button></a></td>
                                                 <td>
                                                     <form method="POST" action="/post/{{ $item->id }}" class="form-horizontal" style="display:inline;">

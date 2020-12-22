@@ -1,4 +1,7 @@
-
+<?php 
+$uid = str_random(20); 
+var_dump($uid);
+?>
         @extends("layouts.app")
         @section("content")
             <div class="container">
@@ -8,6 +11,19 @@
                             <div class="panel-heading">Create New post</div>
                             <div class="panel-body">
                                 <a href="{{ url("/post") }}" title="Back"><button class="btn btn-warning btn-xs">Back</button></a>
+                                
+                                <!--移植-->
+                                      <form method="GET" action="{{ url("item") }}" accept-charset="UTF-8" class="navbar-form navbar-right" role="search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="search" placeholder="Search...">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-info" type="submit">
+                                                <span>Search</span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </form>
+                                <!--//移植-->
                                 <br />
                                 <br />
 
@@ -63,12 +79,8 @@
         <input id="price5" type="hidden" name="price5" value="">
         <input id="price6" type="hidden" name="price6" value="">
         
-        
-
-
-        
-        
-
+        <!--ランダム文字列-->
+        <input id="uid" type="hidden" name="uid" value="{{ $uid }}">
         
 
         <div><input id="submit" type="hidden" value="アイテム決定"></div>
@@ -76,7 +88,21 @@
 <br>
 
       <div>アイテムリスト</div>
-    <div class="cssgrid"></div>
+    <div class="cssgrid">
+      @foreach($item as $item)
+
+      <div class="item">
+        <img src="{{ $item->img}}" class="img">
+        <a href="{{ $item->url}}" class="url" target="_blank">
+            <span class="price" data-id="{{ $item->price}}">{{ $item->price}}</span>
+        </a>
+    　</div>
+      @endforeach
+    </div>
+      
+      
+    <div>Ajax</div>
+    <div class="cssgrid" id="api"></div>
         </main>
         
     <footer id="footer">

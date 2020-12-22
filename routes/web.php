@@ -10,6 +10,7 @@ Route::get("/tables_check_view_html",function(){
     return view("tables_check_view_html");
 });
 
+
 //=======================================================================
 //index
 Route::get("user/", "UsersController@index");
@@ -67,7 +68,7 @@ Route::get("post/", "PostsController@index");
 //create
 Route::get("post/create", "PostsController@create");
 //show
-Route::get("post/{id}", "PostsController@show");
+Route::get("post/{uid}", "PostsController@show");
 //store
 Route::post("post/store", "PostsController@store");
 //edit
@@ -82,17 +83,17 @@ Route::delete("post/{id}", "PostsController@destroy");
 //index
 Route::get("item/", "ItemsController@index");
 //create
-Route::get("item/create", "ItemsController@create");
+// Route::get("item/create", "ItemsController@create");
 //show
-Route::get("item/{id}", "ItemsController@show");
+// Route::get("item/{id}", "ItemsController@show");
 //store
 Route::post("item/store", "ItemsController@store");
 //edit
-Route::get("item/{id}/edit", "ItemsController@edit");
+// Route::get("item/{id}/edit", "ItemsController@edit");
 //update
-Route::put("item/{id}", "ItemsController@update");
+// Route::put("item/{id}", "ItemsController@update");
 //destroy
-Route::delete("item/{id}", "ItemsController@destroy");
+// Route::delete("item/{id}", "ItemsController@destroy");
 //=======================================================================
 
 //=======================================================================

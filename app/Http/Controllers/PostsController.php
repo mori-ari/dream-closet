@@ -8,7 +8,9 @@ use Validate;
 use DB;
 use App\Post;
 use App\Item;
-use Image;
+use Intervention\Image\Facades\Image;
+
+
 
     
     //=======================================================================
@@ -22,7 +24,7 @@ use Image;
         public function index(Request $request)
         {
             $keyword = $request->get("search");
-            $perPage = 25;
+            $perPage = 1000;
     
             if (!empty($keyword)) {
                 
@@ -49,13 +51,38 @@ use Image;
          *
          * @return \Illuminate\View\View
          */
-        public function create()
+        public function create(Request $request)
         {
             
-            // $uid = str_random(20);         
+    // ------------------------------------            
+    // item.indexから移植
+    // ------------------------------------
+      $keyword = $request->get("search");
+            $perPage = 1000;
+    
+            if (!empty($keyword)) {
+                
+				// ----------------------------------------------------
+				// -- QueryBuilder: SELECT [items]--
+				// ----------------------------------------------------
+				$item = DB::table("items")
+				->orWhere("items.itemCode", "LIKE", "%$keyword%")->orWhere("items.url", "LIKE", "%$keyword%")->orWhere("items.img", "LIKE", "%$keyword%")->orWhere("items.price", "LIKE", "%$keyword%")->orWhere("items.genreId", "LIKE", "%$keyword%")->orWhere("items.genreName", "LIKE", "%$keyword%")->orWhere("items.colorId", "LIKE", "%$keyword%")->orWhere("items.colorName", "LIKE", "%$keyword%")->orWhere("items.shopName", "LIKE", "%$keyword%")->orWhere("items.shopUrl", "LIKE", "%$keyword%")->orWhere("items.itemName", "LIKE", "%$keyword%")->orWhere("items.caption", "LIKE", "%$keyword%")->select("*")->addSelect("items.id")->paginate($perPage);
+            } else {
+                    //$item = Item::paginate($perPage);
+				// ----------------------------------------------------
+				// -- QueryBuilder: SELECT [items]--
+				// ----------------------------------------------------
+				$item = DB::table("items")
+				->select("*")->addSelect("items.id")->paginate($perPage);              
+            }          
+            return view("post.create", compact("item"));
+    // ------------------------------------            
+    // item.indexから移植
+    // ------------------------------------
+    
 
             
-            return view("post.create");
+            // return view("post.create");
         }
     
         /**
@@ -67,8 +94,9 @@ use Image;
          */
         public function store(Request $request)
         {
-            $uid = str_random(20); 
             
+            // dd($request);
+
             $this->validate($request, [
 				"uid" => "nullable|max:20", //string('uid',20)->nullable()
 				"title" => "nullable|max:255", //string('title',255)->nullable()
@@ -95,25 +123,108 @@ use Image;
             $requestData = $request->all();
             Post::create($requestData);
             
-            //以下に登録処理を記述（Eloquentモデル）
-            // $posts = new Post;
-            // // $posts->uid = $request->$uid;
-            // $posts->uid = $uid;
-            // $posts->save();  
-            // dd($posts);
-            
+            $uid = $request->uid;
+            $title = $request->title;
+            $img1 = $request->img1;
+            $img2 = $request->img2;
+            $img3 = $request->img3;
+            $img4 = $request->img4;
+            $img5 = $request->img5;
+            $img6 = $request->img6;
+            // $url1 = $request->url1;
+            // $url2 = $request->url2;
+            // $url3 = $request->url3;
+            // $url4 = $request->url4;
+            // $url5 = $request->url5;
+            // $url6 = $request->url6;
+            // $price1 = $request->price1;
+            // $price2 = $request->price2;
+            // $price3 = $request->price3;
+            // $price4 = $request->price4;
+            // $price5 = $request->price5;
+            // $price6 = $request->price6;
             
 
             
-            				// ----------------------------------------------------
-				// -- QueryBuilder: SELECT [posts]--
-				// ----------------------------------------------------
-				$post = DB::table("posts")
-				->select("*")->addSelect("posts.id")->where("posts.id",$id)->first();
-            return view("post.show", compact("post"));
+
+            // 加工する画像のパスを指定する
+            $img = Image::make('assets/img/uid.png');
             
-    
-            // return redirect("post")->with("flash_message", "post added!");
+            // $img->resizeCanvas(1200, 628);
+            // // 縮小
+            // $width = 300;
+            // $height = 300;
+            // $img1->resize($width, null);
+            // $img2->resize($width, null);
+            // $img3->resize($width, null);
+            // $img4->resize($width, null);
+            // $img5->resize($width, null);
+            // $img6->resize($width, null);
+            // // トリミング
+            // $img1->fit($width); //縦横比一緒
+            // $img2->fit($width);//縦横比一緒
+            // $img3->fit($width);//縦横比一緒
+            // $img4->fit($width);//縦横比一緒
+            // $img5->fit($width);//縦横比一緒
+            // $img6->fit($width);//縦横比一緒
+            // 加工する画像の上に指定した画像を重ねる。
+            $img->insert( $img1, 'top-left', 0, 0);
+            $img->insert( $img2, 'top-left', 0, 300);
+            $img->insert( $img3, 'top-left', 300, 300);
+            $img->insert( $img4, 'top-left', 600, 300);
+            $img->insert( $img5, 'top-left', 900, 300);
+            $img->insert( $img6, 'top-left', 900, 0);
+            
+            // $width = 300;
+            // $height = 300;
+            // $img1->resize($width, null);
+            // $img2->resize($width, null);
+            // $img3->resize($width, null);
+            // $img4->resize($width, null);
+            // $img5->resize($width, null);
+            // $img6->resize($width, null);
+            
+            
+            // $x = 40;
+            // $y = 20;
+            
+            // $img->text($title, $x, $y, function($font){
+            
+            //     $font->file(storage_path('app/fonts/ipagp.ttf')); // フォントファイル
+            //     $font->size(25);        // 文字サイズ
+            //     $font->color('#000');   // 文字の色
+            //     $font->align('left'); // 横の揃え方（left, center, right）
+            //     $font->valign('top');   // 縦の揃え方（top, middle, bottom）
+
+            // });
+            
+            // $img ->text($title, 310, 10, function($font) {
+            // $font->file('font/KosugiMaru-Regular.ttf');
+            // $font->size(30);
+            // $font->align('left');
+            // $font->color('#000000');
+            // });
+              return $img->response();
+                       
+
+            
+            // 上記の２つの加工処理をした画像をファイル名を指定して保存する
+            $img->save('storage/img/'.$uid.'.png'); 
+                       
+            
+            // S3保存する場合の参考コード
+            // $disk = Storage::disk('s3');
+            // $thumbnail_upload_path = 'upload/movie_thumbnail/'.Auth::id();
+            // $disk->put($thumbnail_upload_path, file_get_contents($file_path), 'public');
+            
+            
+  
+            
+            
+            
+
+
+            // return redirect("post/show", compact("uid"))->with("flash_message", "post added!");
         }
     
         /**
@@ -123,15 +234,22 @@ use Image;
          *
          * @return \Illuminate\View\View
          */
-        public function show($id)
+        // public function show($id)
+        public function show($uid)
         {
-            //$post = Post::findOrFail($id);
+            // $post = Post::findOrFail($id);
+            
+
             
 				// ----------------------------------------------------
 				// -- QueryBuilder: SELECT [posts]--
 				// ----------------------------------------------------
 				$post = DB::table("posts")
-				->select("*")->addSelect("posts.id")->where("posts.id",$id)->first();
+				->select("*")->addSelect("posts.uid")->where("posts.uid",$uid)->first();
+				
+				
+				
+				
             return view("post.show", compact("post"));
         }
     

@@ -1,95 +1,15 @@
-<?php
-function image() 
-{
-//ヘッダーの設定
-header("Content-type: image/png");
- 
-//指定した大きさの黒画像を生成
-$img = imagecreatetruecolor(1200, 628);
-
-// コピー先画像のサイズ取得
-$imgsize = getimagesize($file1);
-$w = $imgsize[0];
-$h = $imgsize[1];
- 
-//画像背景の設定
-  //背景色の指定
-  $background_color = imagecolorallocate($img, 255, 255, 255);
-  //画像を背景色で塗る
-  imagefilledrectangle($img, 0, 0, 1200, 628, $background_color);
-
-// 出力画像
-$img1 = imagecreatefromjpeg('{{ $post->img1}}');
-$img2 = imagecreatefromjpeg('{{ $post->img2}}');
-$img3 = imagecreatefromjpeg('{{ $post->img3}}');
-$img4 = imagecreatefromjpeg('{{ $post->img4}}');
-$img5 = imagecreatefromjpeg('{{ $post->img5}}');
-$img6 = imagecreatefromjpeg('{{ $post->img6}}');
-
-// // コピー元画像のサイズ取得
-// list($w1, $h1) = getimagesize($img1);
-// list($w2, $h2) = getimagesize($img2);
-// list($w3, $h3) = getimagesize($img3);
-// list($w4, $h4) = getimagesize($img4);
-// list($w5, $h5) = getimagesize($img5);
-// list($w6, $h6) = getimagesize($img6);
-
-// $w1_w = $imagesize[0];
-// $w1_h = $imagesize[1];
-
-// // コピー元画像の配置後のサイズ計算
-// $resize_w = $w / 4;
-// $resize_h1 = $w1_h / ($w1_w / $resize_w);
-
-
-// 画像配置
-// imagecopy($img, $img1, 0, 0, 0, 0, 300, 300);
-// imagecopy($img, $img2, 0, 300, 0, 0, 300, 300);
-// imagecopy($img, $img3, 300, 300, 0, 0, 300, 300);
-// imagecopy($img, $img4, 600, 300, 0, 0, 300, 300);
-// imagecopy($img, $img5, 900, 300, 0, 0, 300, 300);
-// imagecopy($img, $img6, 900, 0, 0, 0, 300, 300);
-
-imagecopyresampled($img, $img1, 0, 0, 0, 0, 300, 300,900,900);
-imagecopyresampled($img, $img2, 0, 300, 0, 0, 300, 300,900,900);
-imagecopyresampled($img, $img3, 300, 300, 0, 0, 300, 300,900,900);
-imagecopyresampled($img, $img4, 600, 300, 0, 0, 300, 300,900,900);
-imagecopyresampled($img, $img5, 900, 300, 0, 0, 300, 300,900,900);
-imagecopyresampled($img, $img6, 900, 0, 0, 0, 300, 300,900,900);
-
-
-//出力テキスト
-  //テキスト色の指定（R,G,B）
-  $text_color = imagecolorallocate($img, 0, 0, 0);
-  //画像に文字列を書き込む（文字サイズ,X,Y,テキスト,色）
-  imagestring($img, 5, 330, 50,  'aaaaaaa', $text_color);
-  imagestring($img, 5, 330, 150,  'kkkkkkkkkkk', $text_color);
-
-
- 
-//画像の出力
-imagepng($img);
- 
-//画像の保存
-imagepng($img, 'ogp/id.png');
- 
-//画像の消去（メモリの解放）
-imagedestroy($img);
-}
-
-?>
         @extends("layouts.app")
         @section("content")
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">post {{ $post->id }}</div>
+                            <div class="panel-heading">post {{ $post->uid }}</div>
                             <div class="panel-body">
 
                                 <a href="{{ url("post") }}" title="Back"><button class="btn btn-warning btn-xs">Back</button></a>
-                                <a href="{{ url("post") ."/". $post->id . "/edit" }}" title="Edit post"><button class="btn btn-primary btn-xs">Edit</button></a>
-                                <form method="POST" action="/post/{{ $post->id }}" class="form-horizontal" style="display:inline;">
+                                <a href="{{ url("post") ."/". $post->uid . "/edit" }}" title="Edit post"><button class="btn btn-primary btn-xs">Edit</button></a>
+                                <form method="POST" action="/post/{{ $post->uid }}" class="form-horizontal" style="display:inline;">
                                         {{ csrf_field() }}
                                         {{ method_field("delete") }}
                                         <button type="submit" class="btn btn-danger btn-xs" title="Delete User" onclick="return confirm('Confirm delete')">
@@ -104,7 +24,7 @@ imagedestroy($img);
 <div>
 
 <!-- PHP画像テスト -->
- <img src="{{ asset('assets/img/uid.png') }}" id="output" style="width:500px"> 
+<img src="/storage/img/{{ $post->uid }}.png" id="output" style="width:500px"> 
 
 
 </div>
