@@ -26,7 +26,7 @@ use RakutenRws_Client;
      public function index(Request $request)
         {
             $keyword = $request->get("search");
-            $perPage = 1000;
+            $perPage = 3000;
     
             if (!empty($keyword)) {
                 

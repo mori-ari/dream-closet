@@ -24,7 +24,7 @@ use Intervention\Image\Facades\Image;
         public function index(Request $request)
         {
             $keyword = $request->get("search");
-            $perPage = 1000;
+            $perPage = 3000;
     
             if (!empty($keyword)) {
                 
@@ -68,7 +68,7 @@ use Intervention\Image\Facades\Image;
 				$item = DB::table("items")
 				->orWhere("items.itemCode", "LIKE", "%$keyword%")->orWhere("items.url", "LIKE", "%$keyword%")->orWhere("items.img", "LIKE", "%$keyword%")->orWhere("items.price", "LIKE", "%$keyword%")->orWhere("items.genreId", "LIKE", "%$keyword%")->orWhere("items.genreName", "LIKE", "%$keyword%")->orWhere("items.colorId", "LIKE", "%$keyword%")->orWhere("items.colorName", "LIKE", "%$keyword%")->orWhere("items.shopName", "LIKE", "%$keyword%")->orWhere("items.shopUrl", "LIKE", "%$keyword%")->orWhere("items.itemName", "LIKE", "%$keyword%")->orWhere("items.caption", "LIKE", "%$keyword%")->select("*")->addSelect("items.id")->paginate($perPage);
             } else {
-                    //$item = Item::paginate($perPage);
+                    $item = Item::paginate($perPage);
 				// ----------------------------------------------------
 				// -- QueryBuilder: SELECT [items]--
 				// ----------------------------------------------------
@@ -94,9 +94,6 @@ use Intervention\Image\Facades\Image;
          */
         public function store(Request $request)
         {
-            
-            // dd($request);
-
             $this->validate($request, [
 				"uid" => "nullable|max:20", //string('uid',20)->nullable()
 				"title" => "nullable|max:255", //string('title',255)->nullable()
@@ -131,99 +128,60 @@ use Intervention\Image\Facades\Image;
             $img4 = $request->img4;
             $img5 = $request->img5;
             $img6 = $request->img6;
-            // $url1 = $request->url1;
-            // $url2 = $request->url2;
-            // $url3 = $request->url3;
-            // $url4 = $request->url4;
-            // $url5 = $request->url5;
-            // $url6 = $request->url6;
-            // $price1 = $request->price1;
-            // $price2 = $request->price2;
-            // $price3 = $request->price3;
-            // $price4 = $request->price4;
-            // $price5 = $request->price5;
-            // $price6 = $request->price6;
-            
-
-            
+            $url1 = $request->url1;
+            $url2 = $request->url2;
+            $url3 = $request->url3;
+            $url4 = $request->url4;
+            $url5 = $request->url5;
+            $url6 = $request->url6;
+            $price1 = $request->price1;
+            $price2 = $request->price2;
+            $price3 = $request->price3;
+            $price4 = $request->price4;
+            $price5 = $request->price5;
+            $price6 = $request->price6;
 
             // 加工する画像のパスを指定する
-            // $img = Image::make('assets/img/uid.png');
+            $img = Image::make('assets/img/uid.png')->resizeCanvas(1200, 628);
             
+            $width = 300;
+            $height = 300;
+            
+            $image1 = Image::make($img1)->fit($width, $height);
+            $image2 = Image::make($img2)->fit($width, $height);
+            $image3 = Image::make($img3)->fit($width, $height);
+            $image4 = Image::make($img4)->fit($width, $height);
+            $image5 = Image::make($img5)->fit($width, $height);
+            $image6 = Image::make($img6)->fit($width, $height);
             // $img->resizeCanvas(1200, 628);
-            // // 縮小
-            // $width = 300;
-            // $height = 300;
-            // $img1->resize($width, null);
-            // $img2->resize($width, null);
-            // $img3->resize($width, null);
-            // $img4->resize($width, null);
-            // $img5->resize($width, null);
-            // $img6->resize($width, null);
-            // // トリミング
-            // $img1->fit($width); //縦横比一緒
-            // $img2->fit($width);//縦横比一緒
-            // $img3->fit($width);//縦横比一緒
-            // $img4->fit($width);//縦横比一緒
-            // $img5->fit($width);//縦横比一緒
-            // $img6->fit($width);//縦横比一緒
+
+
             // 加工する画像の上に指定した画像を重ねる。
-            // $img->insert( $img1, 'top-left', 0, 0);
-            // $img->insert( $img2, 'top-left', 0, 300);
-            // $img->insert( $img3, 'top-left', 300, 300);
-            // $img->insert( $img4, 'top-left', 600, 300);
-            // $img->insert( $img5, 'top-left', 900, 300);
-            // $img->insert( $img6, 'top-left', 900, 0);
-            
-            // $width = 300;
-            // $height = 300;
-            // $img1->resize($width, null);
-            // $img2->resize($width, null);
-            // $img3->resize($width, null);
-            // $img4->resize($width, null);
-            // $img5->resize($width, null);
-            // $img6->resize($width, null);
-            
-            
-            // $x = 40;
-            // $y = 20;
-            
-            // $img->text($title, $x, $y, function($font){
-            
-            //     $font->file(storage_path('app/fonts/ipagp.ttf')); // フォントファイル
-            //     $font->size(25);        // 文字サイズ
-            //     $font->color('#000');   // 文字の色
-            //     $font->align('left'); // 横の揃え方（left, center, right）
-            //     $font->valign('top');   // 縦の揃え方（top, middle, bottom）
+            $img->insert( $image1, 'top-left', 0, 10);
+            $img->insert( $image2, 'top-left', 0, 310);
+            $img->insert( $image3, 'top-left', 300, 310);
+            $img->insert( $image4, 'top-left', 600, 310);
+            $img->insert( $image5, 'top-left', 900, 310);
+            $img->insert( $image6, 'top-left', 900, 10);
+  
+            // テキスト追加
+            $img ->text($title, 600, 50, function($font) {
+            $font->file('assets/font/KosugiMaru-Regular.ttf'); // フォントファイル
+            $font->size(56); // 文字サイズ
+            $font->align('center'); // 横の揃え方（left, center, right）
+            $font->valign('top');  // 縦の揃え方（top, middle, bottom）
+            $font->color('#000000');  // 文字の色
+            });
 
-            // });
-            
-            // $img ->text($title, 310, 10, function($font) {
-            // $font->file('font/KosugiMaru-Regular.ttf');
-            // $font->size(30);
-            // $font->align('left');
-            // $font->color('#000000');
-            // });
-            //   return $img->response();
-                       
-
-            
             // 上記の２つの加工処理をした画像をファイル名を指定して保存する
-            // $img->save('storage/img/'.$uid.'.png'); 
+            $img->save('storage/img/'.$uid.'.png'); 
                        
-            
+            return $img->response();
             // S3保存する場合の参考コード
             // $disk = Storage::disk('s3');
             // $thumbnail_upload_path = 'upload/movie_thumbnail/'.Auth::id();
             // $disk->put($thumbnail_upload_path, file_get_contents($file_path), 'public');
             
-            
-  
-            
-            
-            
-
-
             return redirect("post/")->with("flash_message", "post added!");
             // return redirect("post/show", compact("uid"))->with("flash_message", "post added!");
         }
