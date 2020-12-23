@@ -94,7 +94,7 @@ var_dump($uid);
       <div class="item">
         <img src="{{ $item->img}}" class="img">
         <a href="{{ $item->url}}" class="url" target="_blank">
-            <span class="price" data-id="{{ $item->price}}">{{ $item->price}}</span>
+            <span class="price" data-id="{{ $item->price}}">{{ $item->price}}円</span>
         </a>
     　</div>
       @endforeach

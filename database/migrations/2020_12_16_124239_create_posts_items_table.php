@@ -22,19 +22,19 @@
                     //*********************************
                     // Foreign KEY [ Uncomment if you want to use!! ]
                     //*********************************
-                        //$table->foreign("post_id")->references("id")->on("posts");
-						//$table->foreign("item_id")->references("id")->on("items");
+                        $table->foreign("post_id")->references("id")->on("posts");
+						$table->foreign("item_id")->references("id")->on("items")->onDelete('cascade'); //データなくなったら中間テーブルも削除
 
 
 
 						// ----------------------------------------------------
 						// -- SELECT [posts_items]--
 						// ----------------------------------------------------
-						// $query = DB::table("posts_items")
-						// ->leftJoin("posts","posts.id", "=", "posts_items.post_id")
-						// ->leftJoin("items","items.id", "=", "posts_items.item_id")
-						// ->get();
-						// dd($query); //For checking
+						$query = DB::table("posts_items")
+						->leftJoin("posts","posts.id", "=", "posts_items.post_id")
+						->leftJoin("items","items.id", "=", "posts_items.item_id")
+						->get();
+						dd($query); //For checking
 
 
 

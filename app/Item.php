@@ -10,7 +10,7 @@ class Item extends Model
 	protected $guarded = ["id"];
 	
 	public function posts() {
-    return $this->hasMany('App\Post');
+    return $this->belongsToMany('App\Post');
     }
 
 }

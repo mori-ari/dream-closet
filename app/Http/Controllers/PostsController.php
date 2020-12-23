@@ -148,7 +148,7 @@ use Intervention\Image\Facades\Image;
             
 
             // 加工する画像のパスを指定する
-            $img = Image::make('assets/img/uid.png');
+            // $img = Image::make('assets/img/uid.png');
             
             // $img->resizeCanvas(1200, 628);
             // // 縮小
@@ -168,12 +168,12 @@ use Intervention\Image\Facades\Image;
             // $img5->fit($width);//縦横比一緒
             // $img6->fit($width);//縦横比一緒
             // 加工する画像の上に指定した画像を重ねる。
-            $img->insert( $img1, 'top-left', 0, 0);
-            $img->insert( $img2, 'top-left', 0, 300);
-            $img->insert( $img3, 'top-left', 300, 300);
-            $img->insert( $img4, 'top-left', 600, 300);
-            $img->insert( $img5, 'top-left', 900, 300);
-            $img->insert( $img6, 'top-left', 900, 0);
+            // $img->insert( $img1, 'top-left', 0, 0);
+            // $img->insert( $img2, 'top-left', 0, 300);
+            // $img->insert( $img3, 'top-left', 300, 300);
+            // $img->insert( $img4, 'top-left', 600, 300);
+            // $img->insert( $img5, 'top-left', 900, 300);
+            // $img->insert( $img6, 'top-left', 900, 0);
             
             // $width = 300;
             // $height = 300;
@@ -204,12 +204,12 @@ use Intervention\Image\Facades\Image;
             // $font->align('left');
             // $font->color('#000000');
             // });
-              return $img->response();
+            //   return $img->response();
                        
 
             
             // 上記の２つの加工処理をした画像をファイル名を指定して保存する
-            $img->save('storage/img/'.$uid.'.png'); 
+            // $img->save('storage/img/'.$uid.'.png'); 
                        
             
             // S3保存する場合の参考コード
@@ -224,6 +224,7 @@ use Intervention\Image\Facades\Image;
             
 
 
+            return redirect("post/")->with("flash_message", "post added!");
             // return redirect("post/show", compact("uid"))->with("flash_message", "post added!");
         }
     

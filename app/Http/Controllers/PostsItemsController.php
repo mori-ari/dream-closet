@@ -1,4 +1,4 @@
-<?php
+cd<?php
 
 namespace App\Http\Controllers;
 use Illuminate\Validation\Rule;

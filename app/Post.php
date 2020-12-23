@@ -9,8 +9,8 @@ class Post extends Model
     //
 	protected $guarded = ["id"];
 	
-	public function item() {
-    return $this->belongsTo('App\Item');
+	public function items() {
+    return $this->belongsToMany('App\Item');
     }
 	
 	
