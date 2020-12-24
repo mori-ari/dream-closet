@@ -3,7 +3,14 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Example</title>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@moriari2" />
+<meta property="og:url" content="http://dream-closet.jp" />
+<meta property="og:title" content="○○に着せたい妄想コーデ" />
+<meta property="og:description" content="推しアイドル、推しキャラ、彼や彼女…誰かに着せたい服を妄想して投稿しませんか？" />
+
+<meta property="og:image" content="　@yield('ogp')" />
+<title>○○に着せたい妄想コーデ</title>
 <!--CSS追加-->
 <link rel="stylesheet" href="{{ asset('assets/css/reset.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />  
@@ -17,14 +24,21 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 </head>
+
+
 <body>
     <div class="container">
         <nav class="navbar navbar-default">
             <div class="text-right"><a class="btn btn-default btn-lg" href="/">Home</a></div>
         </nav>
     </div>
-    @yield("content")
     
+    
+    @yield("content")
+  
+  
+  
+
 <!--js追加-->
   <script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
   <script src="{{ asset('assets/js/index.js') }}"></script>
@@ -32,7 +46,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script> 
   <script src="{{ asset('assets/js/swiper.js') }}"></script>
-  
 </body>
 </html>
 

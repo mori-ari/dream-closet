@@ -118,7 +118,7 @@ use Intervention\Image\Facades\Image;
 
             ]);
             $requestData = $request->all();
-            Post::create($requestData);
+
             
             $uid = $request->uid;
             $title = $request->title;
@@ -128,21 +128,21 @@ use Intervention\Image\Facades\Image;
             $img4 = $request->img4;
             $img5 = $request->img5;
             $img6 = $request->img6;
-            $url1 = $request->url1;
-            $url2 = $request->url2;
-            $url3 = $request->url3;
-            $url4 = $request->url4;
-            $url5 = $request->url5;
-            $url6 = $request->url6;
-            $price1 = $request->price1;
-            $price2 = $request->price2;
-            $price3 = $request->price3;
-            $price4 = $request->price4;
-            $price5 = $request->price5;
-            $price6 = $request->price6;
+            // $url1 = $request->url1;
+            // $url2 = $request->url2;
+            // $url3 = $request->url3;
+            // $url4 = $request->url4;
+            // $url5 = $request->url5;
+            // $url6 = $request->url6;
+            // $price1 = $request->price1;
+            // $price2 = $request->price2;
+            // $price3 = $request->price3;
+            // $price4 = $request->price4;
+            // $price5 = $request->price5;
+            // $price6 = $request->price6;
 
             // 加工する画像のパスを指定する
-            $img = Image::make('assets/img/uid.png')->resizeCanvas(1200, 628);
+            $img = Image::make('assets/img/uid.png');
             
             $width = 300;
             $height = 300;
@@ -177,6 +177,10 @@ use Intervention\Image\Facades\Image;
             $img->save('storage/img/'.$uid.'.png'); 
                        
             return $img->response();
+            
+            // response保存
+            Post::create($requestData);
+            
             // S3保存する場合の参考コード
             // $disk = Storage::disk('s3');
             // $thumbnail_upload_path = 'upload/movie_thumbnail/'.Auth::id();

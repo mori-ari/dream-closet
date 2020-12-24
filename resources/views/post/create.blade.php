@@ -42,8 +42,8 @@ var_dump($uid);
       <form action="/post/store" method="POST">
            {{ csrf_field() }}
         <div style="margin-bottom:20px">
-            <div><label for="title">誰に着せたい妄想コーデを作る？（全角○文字以内）</label></div>
-            <div><input type="text" placeholder="(例)ああああ" id="title" name="title" required></div>
+            <div><label for="title">誰に着せたい妄想コーデを作る？（全角10文字以内）</label></div>
+            <div><input type="text"  placeholder="(例)ああああ" id="title" name="title" maxlength="10" required></div>
         </div>
 
       <div>

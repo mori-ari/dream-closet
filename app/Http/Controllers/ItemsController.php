@@ -26,7 +26,7 @@ use RakutenRws_Client;
      public function index(Request $request)
         {
             $keyword = $request->get("search");
-            $perPage = 3000;
+            $perPage = 1000;
     
             if (!empty($keyword)) {
                 
@@ -51,12 +51,70 @@ use RakutenRws_Client;
          *
          * @return \Illuminate\View\View
          */
-        // public function create()
-        // {
-     
-        //             return view("item.create");
+        public function create()
+        {
+                  // -------------------
+     // 楽天
+    // -------------------
+            
+            //楽天APIを扱うRakutenRws_Clientクラスのインスタンスを作成します
+        $client = new RakutenRws_Client();
 
-        //         }
+        //定数化
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        //アプリIDをセット！
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        // アフィリエイトIDをセット (任意) Set Affiliate ID (Optional)
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        // Secret をセットします（認証が必要な場合）
+        // $client->setSecret(RAKUTEN_APPLICATION_SEACRET);
+        // $client->timeout(10000);
+
+
+        // -------------------------------------------------------------
+        $maxpage = 100;
+        // 元（30件までは取得できる記述）IchibaItem/Search API
+        for($i=1; $i<=$maxpage; $i++){
+                    $response[] = $client->execute('IchibaItemSearch', array(
+                      'genreId' => '100371',
+                      'page' => $i,        
+                      'hits' => 30,
+                      'imageFlag' => 1
+                    ));
+        }
+        
+         foreach ($response as $key => $val) {
+                     // レスポンスが正しいかを isOk() で確認することができます
+                // if (! $response->isOk()) {
+                //     return'Error:'.$response->getMessage();
+                // } else {
+                    foreach ($val as $item){
+                        $items[] = array(
+                            'itemCode' => $item['itemCode'],
+                            'url' => $item['itemUrl'],
+                            'img' => $item['mediumImageUrls'][0]['imageUrl'],
+                            'price' => $item['itemPrice'],
+                            'genreId' => $item['genreId'],
+                            // 'genreName' => $item['genreName'],
+                            // 'colorId' => $item['tagGroupId'],
+                            // 'colorName' => $item['tagName'],
+                            'shopName' => $item['shopName'],
+                            'shopUrl' => $item['shopUrl'],
+                            'itemName' => $item['itemName'],
+                            'caption' => $item['itemCaption'],
+                        );
+                    }
+                // }
+            }
+            
+                 DB::table('items') -> insert($items);
+                  dd($items);
+     
+                    // return view("item.create");
+
+                }
     
         /**
          * Store a newly created resource in storage.
@@ -112,7 +170,7 @@ use RakutenRws_Client;
 
 
         // -------------------------------------------------------------
-        $maxpage = 10;
+        $maxpage = 100;
         // 元（30件までは取得できる記述）IchibaItem/Search API
         for($i=1; $i<=$maxpage; $i++){
                     $response[] = $client->execute('IchibaItemSearch', array(

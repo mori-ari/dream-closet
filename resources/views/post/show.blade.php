@@ -1,4 +1,5 @@
         @extends("layouts.app")
+        @section('ogp', 'インデックスページの説明文です')
         @section("content")
             <div class="container">
                 <div class="row">

@@ -83,17 +83,17 @@ Route::delete("post/{id}", "PostsController@destroy");
 //index
 Route::get("item/", "ItemsController@index");
 //create
-// Route::get("item/create", "ItemsController@create");
+Route::get("item/create", "ItemsController@create");
 //show
-// Route::get("item/{id}", "ItemsController@show");
+Route::get("item/{id}", "ItemsController@show");
 //store
 Route::post("item/store", "ItemsController@store");
 //edit
-// Route::get("item/{id}/edit", "ItemsController@edit");
+Route::get("item/{id}/edit", "ItemsController@edit");
 //update
-// Route::put("item/{id}", "ItemsController@update");
+Route::put("item/{id}", "ItemsController@update");
 //destroy
-// Route::delete("item/{id}", "ItemsController@destroy");
+Route::delete("item/{id}", "ItemsController@destroy");
 //=======================================================================
 
 //=======================================================================
