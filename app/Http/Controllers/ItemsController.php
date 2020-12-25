@@ -78,7 +78,8 @@ use RakutenRws_Client;
         // 元（30件までは取得できる記述）IchibaItem/Search API
         for($i=1; $i<=$maxpage; $i++){
                     $response[] = $client->execute('IchibaItemSearch', array(
-                      'genreId' => '100371',
+                      'shopCode' => 'cocacoca',
+                    //   'genreId' => '100371',
                       'page' => $i,        
                       'hits' => 30,
                       'imageFlag' => 1
@@ -152,7 +153,7 @@ use RakutenRws_Client;
       // -------------------
      // 楽天
     // -------------------
-            
+        set_time_limit(0);    
             //楽天APIを扱うRakutenRws_Clientクラスのインスタンスを作成します
         $client = new RakutenRws_Client();
 
@@ -167,10 +168,12 @@ use RakutenRws_Client;
         // Secret をセットします（認証が必要な場合）
         // $client->setSecret(RAKUTEN_APPLICATION_SEACRET);
         // $client->timeout(10000);
+   
 
 
         // -------------------------------------------------------------
-        $maxpage = 100;
+        $maxpage = 6;
+        
         // 元（30件までは取得できる記述）IchibaItem/Search API
         for($i=1; $i<=$maxpage; $i++){
                     $response[] = $client->execute('IchibaItemSearch', array(
