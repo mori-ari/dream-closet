@@ -1,5 +1,4 @@
         @extends("layouts.app")
-        @section('ogp', 'インデックスページの説明文です')
         @section("content")
             <div class="container">
                 <div class="row">
@@ -30,8 +29,9 @@
 
 </div>
 
-<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter" data-hashtags="わたしの理想の6着"　data-via="moriari2" data-show-count="false">Twitterでシェア</a>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter" data-hashtags="○○に着せたい妄想コーデ"　data-via="moriari2" data-show-count="false">
+Twitterでシェア
+</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 

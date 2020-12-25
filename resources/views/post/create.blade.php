@@ -43,7 +43,7 @@ var_dump($uid);
            {{ csrf_field() }}
         <div style="margin-bottom:20px">
             <div><label for="title">誰に着せたい妄想コーデを作る？（全角10文字以内）</label></div>
-            <div><input type="text"  placeholder="(例)ああああ" id="title" name="title" maxlength="10" required></div>
+            <div><input type="text"  placeholder="(例)ああああ" id="title" name="title" maxlength="10" required>に着せたい妄想コーデ</div>
         </div>
 
       <div>
@@ -55,6 +55,9 @@ var_dump($uid);
         <img src="{{ asset('assets/img/default.jpg') }}" id="item5" style="width:50px" class="item" alt="">
         <img src="{{ asset('assets/img/default.jpg') }}" id="item6" style="width:50px" class="item" alt="">
       </div>
+
+
+
 
         <!-- 商品画像 -->
         <input id="img1" type="hidden" name="img1" value="">

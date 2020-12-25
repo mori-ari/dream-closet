@@ -7,9 +7,10 @@
 <meta name="twitter:site" content="@moriari2" />
 <meta property="og:url" content="http://dream-closet.jp" />
 <meta property="og:title" content="○○に着せたい妄想コーデ" />
-<meta property="og:description" content="推しアイドル、推しキャラ、彼や彼女…誰かに着せたい服を妄想して投稿しませんか？" />
+<meta property="og:description" content="誰かに着せたい服を妄想して投稿しませんか？" />
 
-<meta property="og:image" content="　@yield('ogp')" />
+<meta property="og:image" content="{{ asset('assets/img/uid.png') }}" />
+
 <title>○○に着せたい妄想コーデ</title>
 <!--CSS追加-->
 <link rel="stylesheet" href="{{ asset('assets/css/reset.css') }}" />

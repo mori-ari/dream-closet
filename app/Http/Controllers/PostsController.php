@@ -85,6 +85,11 @@ use Intervention\Image\Facades\Image;
             // return view("post.create");
         }
     
+    
+
+    
+    
+    
         /**
          * Store a newly created resource in storage.
          *
@@ -118,7 +123,11 @@ use Intervention\Image\Facades\Image;
 
             ]);
             $requestData = $request->all();
+            
+            
+            $post_id = $request->id;
 
+            dd($request);
             
             $uid = $request->uid;
             $title = $request->title;
@@ -128,18 +137,23 @@ use Intervention\Image\Facades\Image;
             $img4 = $request->img4;
             $img5 = $request->img5;
             $img6 = $request->img6;
-            // $url1 = $request->url1;
-            // $url2 = $request->url2;
-            // $url3 = $request->url3;
-            // $url4 = $request->url4;
-            // $url5 = $request->url5;
-            // $url6 = $request->url6;
-            // $price1 = $request->price1;
-            // $price2 = $request->price2;
-            // $price3 = $request->price3;
-            // $price4 = $request->price4;
-            // $price5 = $request->price5;
-            // $price6 = $request->price6;
+            $url1 = $request->url1;
+            $url2 = $request->url2;
+            $url3 = $request->url3;
+            $url4 = $request->url4;
+            $url5 = $request->url5;
+            $url6 = $request->url6;
+            $price1 = $request->price1;
+            $price2 = $request->price2;
+            $price3 = $request->price3;
+            $price4 = $request->price4;
+            $price5 = $request->price5;
+            $price6 = $request->price6;
+            
+
+            
+            
+            
 
             // 加工する画像のパスを指定する
             $img = Image::make('assets/img/uid.png');
@@ -175,11 +189,13 @@ use Intervention\Image\Facades\Image;
 
             // 上記の２つの加工処理をした画像をファイル名を指定して保存する
             $img->save('storage/img/'.$uid.'.png'); 
+            
+                        // response保存
+            Post::create($requestData);
                        
             return $img->response();
             
-            // response保存
-            Post::create($requestData);
+
             
             // S3保存する場合の参考コード
             // $disk = Storage::disk('s3');
@@ -187,6 +203,7 @@ use Intervention\Image\Facades\Image;
             // $disk->put($thumbnail_upload_path, file_get_contents($file_path), 'public');
             
             return redirect("post/")->with("flash_message", "post added!");
+            // return redirect('post')->with('success', '新しいプロフィールを登録しました');
             // return redirect("post/show", compact("uid"))->with("flash_message", "post added!");
         }
     
