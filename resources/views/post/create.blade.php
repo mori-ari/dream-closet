@@ -2,7 +2,11 @@
 $uid = str_random(20); 
 var_dump($uid);
 ?>
-        @extends("layouts.app")
+@extends("layouts.app")
+@section('title', 'あの人に着せたい妄想コーデを作成しよう')
+@section('description', '妄想コーデを作成してTwitterに投稿しませんか？')
+@section('url', 'post/create')
+@section('ogimage', 'ogp')
         @section("content")
             <div class="container">
                 <div class="row">
@@ -108,10 +112,7 @@ var_dump($uid);
     <div class="cssgrid" id="api"></div>
         </main>
         
-    <footer id="footer">
-        <div id="copywrite">(c) copyright</div>
-    </footer>
-                                
+             
                                 
                                 <!--//追加-->
                                 

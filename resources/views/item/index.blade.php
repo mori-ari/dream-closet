@@ -1,5 +1,8 @@
-
-        @extends("layouts.app")
+@extends("layouts.app")
+@section('title', 'タイトル')
+@section('description', 'ディスクリプション')
+@section('url', 'ページURL')
+@section('ogimage', 'og画像')
         @section("content")
             <div class="container">
                 <div class="row">

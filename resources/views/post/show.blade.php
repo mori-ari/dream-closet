@@ -1,4 +1,9 @@
-        @extends("layouts.app")
+@extends("layouts.app")
+@section('title', 'あの人に着せたい妄想コーデを作成しよう')
+@section('description', '妄想コーデを作成してTwitterに投稿しませんか？')
+@section('url')post/{{ $post->uid }}@endsection
+@section('ogimage'){{ $post->uid }}@endsection
+
         @section("content")
             <div class="container">
                 <div class="row">
@@ -24,7 +29,7 @@
 <div>
 
 <!-- PHP画像テスト -->
-<img src="/storage/img/{{ $post->uid }}.png" id="output" style="width:500px"> 
+<img src="/storage/img/{{ $post->uid }}.png" id="output" style="width:600px"> 
 
 
 </div>

@@ -58,7 +58,7 @@ use Intervention\Image\Facades\Image;
     // item.indexから移植
     // ------------------------------------
       $keyword = $request->get("search");
-            $perPage = 1000;
+            $perPage = 3000;
     
             if (!empty($keyword)) {
                 
@@ -125,10 +125,7 @@ use Intervention\Image\Facades\Image;
             $requestData = $request->all();
             
             
-            $post_id = $request->id;
-
-            dd($request);
-            
+            $id = $request->id;
             $uid = $request->uid;
             $title = $request->title;
             $img1 = $request->img1;
@@ -156,10 +153,10 @@ use Intervention\Image\Facades\Image;
             
 
             // 加工する画像のパスを指定する
-            $img = Image::make('assets/img/uid.png');
+            $img = Image::make('assets/img/uid.png')->resize(600, 314);
             
-            $width = 300;
-            $height = 300;
+            $width = 150;
+            $height = 150;
             
             $image1 = Image::make($img1)->fit($width, $height);
             $image2 = Image::make($img2)->fit($width, $height);
@@ -167,21 +164,28 @@ use Intervention\Image\Facades\Image;
             $image4 = Image::make($img4)->fit($width, $height);
             $image5 = Image::make($img5)->fit($width, $height);
             $image6 = Image::make($img6)->fit($width, $height);
-            // $img->resizeCanvas(1200, 628);
+            // $img->resizeCanvas(600, 314);
 
 
             // 加工する画像の上に指定した画像を重ねる。
-            $img->insert( $image1, 'top-left', 0, 10);
-            $img->insert( $image2, 'top-left', 0, 310);
-            $img->insert( $image3, 'top-left', 300, 310);
-            $img->insert( $image4, 'top-left', 600, 310);
-            $img->insert( $image5, 'top-left', 900, 310);
-            $img->insert( $image6, 'top-left', 900, 10);
+            // $img->insert( $image1, 'top-left', 0, 10);
+            // $img->insert( $image2, 'top-left', 0, 310);
+            // $img->insert( $image3, 'top-left', 300, 310);
+            // $img->insert( $image4, 'top-left', 600, 310);
+            // $img->insert( $image5, 'top-left', 900, 310);
+            // $img->insert( $image6, 'top-left', 900, 10);
+            $img->insert( $image1, 'top-left', 0, 5);
+            $img->insert( $image2, 'top-left', 0, 155);
+            $img->insert( $image3, 'top-left', 150, 155);
+            $img->insert( $image4, 'top-left', 300, 155);
+            $img->insert( $image5, 'top-left', 450, 155);
+            $img->insert( $image6, 'top-left', 450, 5);
+  
   
             // テキスト追加
-            $img ->text($title, 600, 50, function($font) {
+            $img ->text($title, 300, 25, function($font) {
             $font->file('assets/font/KosugiMaru-Regular.ttf'); // フォントファイル
-            $font->size(56); // 文字サイズ
+            $font->size(28); // 文字サイズ
             $font->align('center'); // 横の揃え方（left, center, right）
             $font->valign('top');  // 縦の揃え方（top, middle, bottom）
             $font->color('#000000');  // 文字の色
@@ -193,18 +197,20 @@ use Intervention\Image\Facades\Image;
                         // response保存
             Post::create($requestData);
                        
-            return $img->response();
-            
-
+            // return $img->response();
             
             // S3保存する場合の参考コード
             // $disk = Storage::disk('s3');
             // $thumbnail_upload_path = 'upload/movie_thumbnail/'.Auth::id();
             // $disk->put($thumbnail_upload_path, file_get_contents($file_path), 'public');
             
-            return redirect("post/")->with("flash_message", "post added!");
+            
+            // return redirect("post/")->with("flash_message", "post added!");
             // return redirect('post')->with('success', '新しいプロフィールを登録しました');
-            // return redirect("post/show", compact("uid"))->with("flash_message", "post added!");
+            
+            $resultpage = 'post/'.$uid;
+            // dd($resultpage);
+            return redirect($resultpage);
         }
     
         /**

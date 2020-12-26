@@ -3,15 +3,18 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="keywords" content="妄想クローゼット,妄想コーデ,妄想ファッション,EC" />
+<meta name="description" content="@yield('description')">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@moriari2" />
-<meta property="og:url" content="http://dream-closet.jp" />
-<meta property="og:title" content="○○に着せたい妄想コーデ" />
-<meta property="og:description" content="誰かに着せたい服を妄想して投稿しませんか？" />
+<meta name="twitter:site" content="@dreamCloset_tw" />
+<meta property="og:url" content="http://rarala.sakura.ne.jp/@yield('url')" />
+<meta property="og:title" content="@yield('title')" />
+<meta property="og:description" content="@yield('description')" />
+<meta property="og:image" content="https://rarala.sakura.ne.jp/storage/img/@yield('ogimage').png" />
+<meta property="og:site_name" content="妄想クローゼット" />
 
-<meta property="og:image" content="{{ asset('assets/img/uid.png') }}" />
 
-<title>○○に着せたい妄想コーデ</title>
+<title>@yield('title')</title>
 <!--CSS追加-->
 <link rel="stylesheet" href="{{ asset('assets/css/reset.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />  
@@ -37,7 +40,10 @@
     
     @yield("content")
   
-  
+      <footer id="footer">
+        <div id="copywrite">(c) copyright</div>
+    </footer>
+                   
   
 
 <!--js追加-->

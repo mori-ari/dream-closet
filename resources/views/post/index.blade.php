@@ -1,5 +1,8 @@
-
-        @extends("layouts.app")
+@extends("layouts.app")
+@section('title', 'タイトル')
+@section('description', 'ディスクリプション')
+@section('url', 'ページURL')
+@section('ogimage', 'og画像')
         @section("content")
             <div class="container">
                 <div class="row">
@@ -39,9 +42,9 @@
                                     
                                     <tr>
 
-                                            <td>{{ $item->id}} </td>
+                                            <td>{{ $item->id}}</td>
 
-                                            <td>{{ $item->uid}} </td>
+                                            <td>{{ $item->uid}}<br><img src="/storage/img/{{ $item->uid }}.png" style="width:200px"> </td>
 
                                             <td>{{ $item->title}} </td>
 
