@@ -22,19 +22,19 @@ $(function () {
   let n = 1;
 
 // スクロールでページ追加
-  $(window).bind("scroll", function () {
-        let scrollHeight = $(document).height();
-        let scrollPosition = $(window).height() + $(window).scrollTop();
-        if ((scrollHeight - scrollPosition) / scrollHeight <= 0.0005) {
-            //スクロールの位置が下部0.05％の範囲に来た場合
-            if (n < MAX_PAGE) {
-              search_rakuten(n+1);
-            }
-        } else {
-            //それ以外のスクロールの位置の場合
-            // $('body').css('background', '#eeeeee');
-        }
-    });
+  // $(window).bind("scroll", function () {
+  //       let scrollHeight = $(document).height();
+  //       let scrollPosition = $(window).height() + $(window).scrollTop();
+  //       if ((scrollHeight - scrollPosition) / scrollHeight <= 0.0005) {
+  //           //スクロールの位置が下部0.05％の範囲に来た場合
+  //           if (n < MAX_PAGE) {
+  //             search_rakuten(n+1);
+  //           }
+  //       } else {
+  //           //それ以外のスクロールの位置の場合
+  //           // $('body').css('background', '#eeeeee');
+  //       }
+  //   });
 
 
   function put_item(item) {  

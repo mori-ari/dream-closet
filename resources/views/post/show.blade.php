@@ -4,31 +4,12 @@
 @section('url')post/{{ $post->uid }}@endsection
 @section('ogimage'){{ $post->uid }}@endsection
 
-        @section("content")
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">post {{ $post->uid }}</div>
-                            <div class="panel-body">
-
-                                <a href="{{ url("post") }}" title="Back"><button class="btn btn-warning btn-xs">Back</button></a>
-                                <a href="{{ url("post") ."/". $post->uid . "/edit" }}" title="Edit post"><button class="btn btn-primary btn-xs">Edit</button></a>
-                                <form method="POST" action="/post/{{ $post->uid }}" class="form-horizontal" style="display:inline;">
-                                        {{ csrf_field() }}
-                                        {{ method_field("delete") }}
-                                        <button type="submit" class="btn btn-danger btn-xs" title="Delete User" onclick="return confirm('Confirm delete')">
-                                        Delete
-                                        </button>    
-                            </form>
-                            <br/>
-                            <br/>
-                            
-                            <!--追加-->
-                            <div id="wp">
+    @section("content")
+        
+    <!--追加-->
+<div id="wp">
 <div>
-
-<!-- PHP画像テスト -->
+<!-- 生成画像 -->
 <img src="/storage/img/{{ $post->uid }}.png" id="output" style="width:600px"> 
 
 
@@ -92,27 +73,49 @@ Twitterでシェア
 </div>
 </a>
 
-<a href="{{ $post->url6}}" target="_blank">
-<div class="polaroid-even">
-  <p>￥{{ $post->price6}}</p>
-  <img src="{{ $post->img6}}" />
-  <div class="circle-even"></div>
-  <div class="circle_l-even"></div>
-  <div class="check-even">Check→</div>
-</div>
-</a>
+// <a href="{{ $post->url6}}" target="_blank">
+// <div class="polaroid-even">
+//   <p>￥{{ $post->price6}}</p>
+//   <img src="{{ $post->img6}}" />
+//   <div class="circle-even"></div>
+//   <div class="circle_l-even"></div>
+//   <div class="check-even">Check→</div>
+// </div>
+// </a>
 
 
 </div>
 
-<footer>
-    <div id="copywrite">(c) copyright</div>
-</footer>
+        
+        
+        
+        
+        
+        
+        
+        
+           <br><br><br><br><br><br><br><br><br>     
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">post {{ $post->uid }}</div>
+                            <div class="panel-body">
+
+                                <a href="{{ url("post") }}" title="Back"><button class="btn btn-warning btn-xs">Back</button></a>
+                                <a href="{{ url("post") ."/". $post->uid . "/edit" }}" title="Edit post"><button class="btn btn-primary btn-xs">Edit</button></a>
+                                <form method="POST" action="/post/{{ $post->uid }}" class="form-horizontal" style="display:inline;">
+                                        {{ csrf_field() }}
+                                        {{ method_field("delete") }}
+                                        <button type="submit" class="btn btn-danger btn-xs" title="Delete User" onclick="return confirm('Confirm delete')">
+                                        Delete
+                                        </button>    
+                            </form>
+
 
                             
                             
-                            <!--追加-->
-                            
+
                             
                             
                             <div class="table-responsive">

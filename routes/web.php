@@ -2,13 +2,14 @@
 use Illuminate\Http\Response;
 
 //default
-Route::get("/", function () {
-    return view("welcome");
-});
+// Route::get("/", function () {
+//     return view("welcome");
+// });
 //Demo (Delete after site publish.)
 Route::get("/tables_check_view_html",function(){
     return view("tables_check_view_html");
 });
+
 
 
 //=======================================================================
@@ -64,9 +65,10 @@ Route::delete("failed_job/{id}", "FailedJobsController@destroy");
 
 //=======================================================================
 //index
-Route::get("post/", "PostsController@index");
+// Route::get("post/", "PostsController@index");
+Route::get("/", "PostsController@index");
 //create
-Route::get("post/create", "PostsController@create");
+Route::get("post/", "PostsController@create");
 //show
 Route::get("post/{uid}", "PostsController@show");
 //store
@@ -85,15 +87,15 @@ Route::get("item/", "ItemsController@index");
 //create
 Route::get("item/create", "ItemsController@create");
 //show
-Route::get("item/{id}", "ItemsController@show");
+// Route::get("item/{id}", "ItemsController@show");
 //store
-Route::post("item/store", "ItemsController@store");
+// Route::post("item/store", "ItemsController@store");
 //edit
-Route::get("item/{id}/edit", "ItemsController@edit");
+// Route::get("item/{id}/edit", "ItemsController@edit");
 //update
-Route::put("item/{id}", "ItemsController@update");
+// Route::put("item/{id}", "ItemsController@update");
 //destroy
-Route::delete("item/{id}", "ItemsController@destroy");
+// Route::delete("item/{id}", "ItemsController@destroy");
 //=======================================================================
 
 //=======================================================================
@@ -106,9 +108,9 @@ Route::get("posts_item/{id}", "PostsItemsController@show");
 //store
 Route::post("posts_item/store", "PostsItemsController@store");
 //edit
-Route::get("posts_item/{id}/edit", "PostsItemsController@edit");
+// Route::get("posts_item/{id}/edit", "PostsItemsController@edit");
 //update
-Route::put("posts_item/{id}", "PostsItemsController@update");
+// Route::put("posts_item/{id}", "PostsItemsController@update");
 //destroy
-Route::delete("posts_item/{id}", "PostsItemsController@destroy");
+// Route::delete("posts_item/{id}", "PostsItemsController@destroy");
 //=======================================================================

@@ -1,3 +1,6 @@
+/* -----------------
+共通
+----------------- */
 body {
   margin: 0;
   padding: 0;
@@ -12,36 +15,76 @@ body {
   color: #856c59;
 }
 
-
-@import url('https://fonts.googleapis.com/css2?family=Amatic+SC&family=Bad+Script&display=swap');
+h1{
+  font-size:18px;
+}
 
 
 /* -----------------
-タブスワイプ
+トップページ（/）
 ----------------- */
 
-#main {
-  margin-top: 200px;
-}
 
-.container {
-  /* max-width: 375px; */
-  /* margin: 10px auto; */
-  /* border: 1px solid #666; */
-}
+/* -----------------
+投稿ページ（post/create）
+----------------- */
 
-.swiper-container {
-  /* margin: 0 auto 30px; */
+/*下部固定*/
+/*li.fm {*/
+/*    float: left;*/
+/*    width: 33%;*/
+/*    background: white;*/
+/*    text-align: center;*/
+/*    border: 1px solid black;*/
+/*    border-radius: 4px;*/
+/*    padding: 1%;*/
+/*    margin-right: 1px;*/
+/*}*/
+.footer-menu {
+    width: 100%;
+    display: block;
+    position: fixed;
+    bottom: 0px;
+    /*left: 6px;*/
+    opacity: 1!important;
+    z-index: 2;
+    background:#666666;
 }
+.sysFuncText.footermenu {
+    max-width: 100%!important;
+    /*margin-left: 1%!important;*/
+}
+/*@media screen and (max-width:480px){*/
+/*.footer-menu {*/
+/*    left: 2px;*/
+/*}*/
+/*li.fm {*/
+/*    padding: 5%;*/
+/*}*/
+/*}*/
+
+
+/*タブスワイプ*/
+
+
+/*.container {*/
+   /*max-width: 375px; */
+   /*margin: 10px auto; */
+   /*border: 1px solid #666; */
+/*}*/
+
+/*.swiper-container {*/
+   /*margin: 0 auto 30px; */
+/*}*/
 
 .tab-menu {
-  background: #b6ddd7;
+  background: #999999;
   /* border-bottom: 1px solid #666; */
 }
 
 .tab-menu .swiper-slide {
   width: auto;
-  padding: 10px 0;
+  padding: 10px;
 }
 
 .tab-contents {

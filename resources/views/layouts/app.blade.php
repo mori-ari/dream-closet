@@ -6,7 +6,7 @@
 <meta name="keywords" content="妄想クローゼット,妄想コーデ,妄想ファッション,EC" />
 <meta name="description" content="@yield('description')">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@dreamCloset_tw" />
+<meta name="twitter:site" content="@dreamCloset_jp" />
 <meta property="og:url" content="http://rarala.sakura.ne.jp/@yield('url')" />
 <meta property="og:title" content="@yield('title')" />
 <meta property="og:description" content="@yield('description')" />
@@ -18,8 +18,8 @@
 <!--CSS追加-->
 <link rel="stylesheet" href="{{ asset('assets/css/reset.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />  
-<link rel="stylesheet" href="{{ asset('assets/css/swiper.min.css') }}" />  
-<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css">-->
+<!--<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css">
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
@@ -31,11 +31,7 @@
 
 
 <body>
-    <div class="container">
-        <nav class="navbar navbar-default">
-            <div class="text-right"><a class="btn btn-default btn-lg" href="/">Home</a></div>
-        </nav>
-    </div>
+
     
     
     @yield("content")
@@ -51,7 +47,8 @@
   <script src="{{ asset('assets/js/index.js') }}"></script>
   <script src="{{ asset('assets/js/rakuten.js') }}"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
+  
   <script src="{{ asset('assets/js/swiper.js') }}"></script>
 </body>
 </html>

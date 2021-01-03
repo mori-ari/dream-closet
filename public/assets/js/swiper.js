@@ -26,3 +26,6 @@ var galleryThumbs = new Swiper('.tab-menu', {
       swiper: galleryThumbs
     }
   });
+  
+  
+  

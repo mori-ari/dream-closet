@@ -7,6 +7,9 @@ use Auth;
 use Validate;
 use DB;
 use App\PostsItem;
+
+// テスト用
+use RakutenRws_Client;
     
     //=======================================================================
     class PostsItemsController extends Controller
@@ -50,7 +53,96 @@ use App\PostsItem;
          */
         public function create()
         {
-            return view("posts_item.create");
+            // 
+    // -------------------
+    // 楽天カテゴリ取得テスト
+    // -------------------
+    //楽天APIを扱うRakutenRws_Clientクラスのインスタンスを作成します
+        $client = new RakutenRws_Client();
+
+        //定数化
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        //アプリIDをセット！
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+ 
+// 楽天市場ジャンル検索API では operation として 'IchibaGenreSearch' を指定してください。
+// ここでは例として genreId に 0 を指定しています。
+$response = $client->execute('IchibaGenreSearch', array(
+    'genreId' => 100371
+));
+
+// レスポンスが正常かどうかを isOk() で確認することができます
+// if ($response->isOk()) {
+    foreach ($response['children'] as $childGenre) {
+        $genre = $childGenre['child'];
+ 
+        // ジャンル名を出力します
+        // echo $genre['genreName']."\n";
+            
+
+    }
+// } else {
+    // getMessage() でレスポンスメッセージを取得することができます
+    // echo 'Error:'.$response->getMessage();
+// }    
+dd($response);
+
+    
+
+
+
+
+
+        // -------------------------------------------------------------
+        $maxpage = 100;
+        // 元（30件までは取得できる記述）IchibaItem/Search API
+        for($i=8; $i<=$maxpage; $i++){
+                    $response[] = $client->execute('IchibaItemSearch', array(
+                      'shopCode' => 'cocacoca',
+                      'genreId' => '100371',
+                      'page' => $i,        
+                      'hits' => 30,
+                      'imageFlag' => 1
+                    ));
+        }
+        
+         foreach ($response as $key => $val) {
+                     // レスポンスが正しいかを isOk() で確認することができます
+                // if (! $response->isOk()) {
+                //     return'Error:'.$response->getMessage();
+                // } else {
+                    foreach ($val as $item){
+                        //画像サイズを変えたかったのでURLを整形します
+                        $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                        $items[] = array(
+                            'itemCode' => $item['itemCode'],
+                            'url' => $item['itemUrl'],
+                            'img' => $str,
+                            'price' => $item['itemPrice'],
+                            'genreId' => $item['genreId'],
+                            // 'genreName' => $item['genreName'],
+                            // 'colorId' => $item['tagGroupId'],
+                            // 'colorName' => $item['tagName'],
+                            'shopName' => $item['shopName'],
+                            'shopUrl' => $item['shopUrl'],
+                            'itemName' => $item['itemName'],
+                            'caption' => $item['itemCaption'],
+                            // 日付追加
+                            'created_at' => now(),
+                            'updated_at' => now()
+                        );
+                    }
+                // }
+            }
+                 DB::table('items') -> insert($items);
+                  dd($items);
+
+            
+            
+            
+            // return view("posts_item.create");
         }
     
         /**

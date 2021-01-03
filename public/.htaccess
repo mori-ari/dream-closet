@@ -18,4 +18,9 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+    
+    # (追加)ブラウザを閉じる、ネットワークが切れた場合でも処理を続ける場合は記載(https://tech-initiatives.jp/blog/max_execution_time/)
+    php_value ignore_user_abort On
+    # (追加)タイムアウトは3分で指定
+    php_value max_execution_time 0
 </IfModule>

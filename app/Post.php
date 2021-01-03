@@ -13,7 +13,10 @@ class Post extends Model
     return $this->belongsToMany('App\Item');
     }
 	
-	
+    public function category()
+    {
+     return $this->belongsTo('App\Category');
+    }
 	
 
 }
