@@ -69,7 +69,6 @@ use Intervention\Image\Facades\Image;
         public function store(Request $request)
         {
             
-            $uid = str_random(20); 
             // dd($request);
 
             $this->validate($request, [

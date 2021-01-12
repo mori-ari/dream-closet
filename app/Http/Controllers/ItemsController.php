@@ -68,126 +68,169 @@ use Carbon\Carbon;
         $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
         // 認証が必要な場合
         // $client->setSecret(RAKUTEN_APPLICATION_SEACRET);
-        
         //処理時間無制限に設定　https://www.freemen.jp/sys/php/679
         set_time_limit(0);
         ini_set('max_execution_time', 0);
-
         // -------------------------------------------------------------
-        $maxpage = 5
-        $genreIde = [];
-        $shopCode= [
-'apartbylowrys',
-'bcstock',
-'beams',
-'beams-outlet',
-'beautyandyouth',
-'coen',
-'converse',
-'ehyphen',
-'earth1999',
-'ete-store',
-'frayid',
-'freesmart',
-'globalwork',
-'heather',
-'shop-ined',
-'ingni-shop',
-'jeanasis',
-'jadorejunonline',
-'jillbyjillstuart',
-'jillstuart',
-'jouete-store',
-'katespadenewyork',
-'kbf-rba',
-'kumikyoku',
-'lilybrown',
-'lowrysfarm',
-'mackintoshlondon',
-'mackintoshphilosophy',
-'majesticlegon',
-'milaowen',
-'milkfed',
-'mystywoman-shop',
-'nano-universe',
-'naturalbeautybasic',
-'nikoand',
-'odetteeodile',
-'pageboy-shop',
-'palgroupoutlet',
-'pinkyanddianne',
-'proportionbodydressing',
-'shop-raycassin',
-'ropepicnic',
-'rosebud',
-'sm2-can',
-'samanthathavasa',
-'sanyoselect',
-'sheltter-webstore',
-'ships',
-'snidel',
-'thevirgnia',
-'unitedarrows',
-'greenlabelrelaxing',
-'unitedarrowsltdoutlet',
-'doors-rba',
-'ur-rba',
-'ur-items',
-'rosso-rba',
-'usonlinestore',
-'usagi-online',
-'vis-jun',
-'xgirl'
-];
-        
-        
-        for($i=0; $i<=$maxpage; $i++){
-                    $response[] = $client->execute('IchibaItemSearch', array(
-                      'shopCode' => 'cocacoca',
-                      'genreId' => '100371',
-                      'page' => $i,        
-                      'hits' => 30,
-                      'imageFlag' => 1
-                    ));
-        }
-        
-         foreach ($response as $key => $val) {
-                     // レスポンスが正しいかを isOk() で確認することができます
-                // if (! $response->isOk()) {
-                //     return'Error:'.$response->getMessage();
-                // } else {
-                    foreach ($val as $item){
-                        //画像サイズを変えたかったのでURLを整形します
-                        $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
-                        $items[] = array(
-                            'itemCode' => $item['itemCode'],
-                            'url' => $item['itemUrl'],
-                            'img' => $str,
-                            'price' => $item['itemPrice'],
-                            'genreId' => $item['genreId'],
-                            // 'genreName' => $item['genreName'],
-                            // 'colorId' => $item['tagGroupId'],
-                            // 'colorName' => $item['tagName'],
-                            'shopName' => $item['shopName'],
-                            'shopUrl' => $item['shopUrl'],
-                            'itemName' => $item['itemName'],
-                            'caption' => $item['itemCaption'],
-                            // 日付追加
-                            'created_at' => now(),
-                            'updated_at' => now()
-                        );
-                    }
-                // }
-            }
-                 DB::table('items') -> insert($items);
-                  dd($items);
 
-    }
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            
+
+
+        $shopArrey= [
+            // 'apartbylowrys',
+            // 'bcstock',
+            // 'beams',
+            // 'beams-outlet',
+            // 'beautyandyouth',
+            // 'coen',
+            // 'converse',
+            'ehyphen',
+            'earth1999',
+            'ete-store',
+            'frayid',
+            'freesmart',
+            'globalwork',
+            'heather',
+            'shop-ined',
+            'ingni-shop',
+            'jeanasis',
+            'jadorejunonline',
+            'jillbyjillstuart',
+            'jillstuart',
+            'jouete-store',
+            'katespadenewyork',
+            'kbf-rba',
+            'kumikyoku',
+            'lilybrown',
+            'lowrysfarm',
+            'mackintoshlondon',
+            'mackintoshphilosophy',
+            'majesticlegon',
+            'milaowen',
+            'milkfed',
+            'mystywoman-shop',
+            'nano-universe',
+            'naturalbeautybasic',
+            'nikoand',
+            'odetteeodile',
+            'pageboy-shop',
+            'palgroupoutlet',
+            'pinkyanddianne',
+            'proportionbodydressing',
+            'shop-raycassin',
+            'ropepicnic',
+            'rosebud',
+            'sm2-can',
+            'samanthathavasa',
+            'sanyoselect',
+            'sheltter-webstore',
+            'ships',
+            'snidel',
+            'thevirgnia',
+            'unitedarrows',
+            'greenlabelrelaxing',
+            'unitedarrowsltdoutlet',
+            'doors-rba',
+            'ur-rba',
+            'ur-items',
+            'rosso-rba',
+            'usonlinestore',
+            'usagi-online',
+            'vis-jun',
+            'xgirl'
+        ];
+    
+        foreach ($shopArrey as $key => $shopCode) {        
+            foreach ($genreArrey as $key => $genreId) {
                 
+                $maxpage =1;
+        
+                for($i=1; $i<=$maxpage; $i++){
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => $shopCode,
+                              'genreId' => $genreId,
+                              'page' => $i,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                            }
                 
+                 foreach ($response as $key => $val) {
+                        // レスポンスが正しいかを isOk() で確認することができます
+                        // if (! $response->isOk()) {
+                        //     return'Error:'.$response->getMessage();
+                        // } else {
+                        
+                            foreach ($val as $item){
+                                //画像サイズを変えたかったのでURLを整形します
+                                $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                      
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        // }
+                    }
+
+                    
+            }
+        }
+
+
+
+        }
+                
+
+           
 // ‐‐‐‐‐‐‐‐‐――――――――――――――――
 // カテゴリメモ
 // ‐‐‐‐‐‐‐‐‐――――――――――――――――
+
+// 必要な物
+// 555086	トップス 1
+// 555089	ボトムス 2
+// 110729	ワンピース 3
+// 555083	オールインワン・サロペット 4
+// 555087	コート・ジャケット 5
+// 100480	レディース靴 6
+// 110933	レディースバッグ 7
+// 110974	男女兼用バッグ 7
+// 403732	レディース帽子 8
+// 207204	眼鏡 8
+// 110894	サングラス 8
+// 560100	マフラー・スカーフ 8
+// 403755	レディース手袋 8
+// 403762	耳あて 8
+// 207306	レディースベルト 8
+// 100486	レディースジュエリー・アクセサリー 9
 
 // ----------
 // genreLevel: 1,
@@ -237,9 +280,7 @@ use Carbon\Carbon;
     // "genreId": 100486
     // shopCode：ete-store
 
-// ----------
-// その他->Other
-// ----------
+// ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
     
         /**
          * Store a newly created resource in storage.

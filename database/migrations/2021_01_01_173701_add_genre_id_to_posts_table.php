@@ -33,6 +33,7 @@ class AddGenreIdToPostsTable extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             //
+            
 
         });
     }

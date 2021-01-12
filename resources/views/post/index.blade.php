@@ -1,25 +1,37 @@
 @extends("layouts.app")
-@section('title', 'タイトル')
-@section('description', 'ディスクリプション')
-@section('url', 'ページURL')
+@section('title', '#私の妄想コーデ')
+@section('description', '「もしも○○なら着たい服」「推しアイドルに着せたい服」、好きなアイテムを組み合わせてあなたの妄想コーデを作成しませんか？')
+@section('url', '/')
 @section('ogimage', 'og画像')
         @section("content")
         
 <main>
-<h1>#私の妄想コーデ</h1>
-<div style="width:400px;margin:auto;text-align:center">
-<p>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト</p>
-<a href="{{ url("post/") }}"><button>妄想コーデを作成する</button></a>
+<h1><img src="{{ asset('assets/img/logo.png') }}" id="logo" alt="＃私の妄想コーデ"></h1>
+
+<div class="description">
+<div class="text-box">
+<p>「もし○○が叶ったら着たい服」<br>「推しアイドルに着せたいコーデ」<br>好きなアイテムを組み合わせて<br class="br-sp500" />あなたの妄想コーデを作成しませんか？</p>
 </div>
-<div style="margin:40px">
+<a href="{{ url("post/") }}"><button class="bt">妄想コーデを作成する</button></a>
+
+</div>
+
+
+
+<div class="contents">
+        <h2>みんなの妄想コーデ</h2>
+
          @foreach($post as $item)
-        <a href="{{ url("/post/" . $item->uid) }}">
-        <img src="/storage/img/{{ $item->uid }}.png" style="width:20px">
+
+        <a  href="{{ url("/post/" . $item->uid) }}">
+        <img class="ogp" src="/storage/img/{{ $item->uid }}.png">
         </a>
+
         @endforeach
-        </div>
-        
-        
+</div>
+
+
+
 </main>
         
         
