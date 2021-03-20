@@ -24,7 +24,7 @@ use Intervention\Image\Facades\Image;
         public function index(Request $request)
         {
             // orderBy('id', 'desc')->を追加して降順表示した
-            $perPage = 10;
+            $perPage = 8;
             $post = DB::table("posts")
 				->select("*")->addSelect("posts.id")->orderBy('id', 'desc')->paginate($perPage); 
 			return view("post.index",compact("post"));
@@ -40,7 +40,7 @@ use Intervention\Image\Facades\Image;
         {
             
         // inRandomOrder()->ランダム表示　orderBy('updated_at', 'desc')更新日降順 
-            $perPage = 40;
+            $perPage = 30;
             // $items = DB::table("items")->select("*")->addSelect("items.id")->orderBy('updated_at', 'desc')->simplePaginate($perPage);
 			$tops= DB::table("items")
     			->where('genreId', '=','303656') 
@@ -378,15 +378,10 @@ use Intervention\Image\Facades\Image;
             $genre5 = $request->genre5;
             // $genre6 = $request->genre6;
             
-
-
-
-
 // ‐‐‐‐‐‐‐‐‐――――――――――――――――
 // 加工する画像のパスを指定する
 // ‐‐‐‐‐‐‐‐‐――――――――――――――――
-            $img = Image::make('assets/img/template_4.png')->resize(1200, 628);
-
+            $img = Image::make('assets/img/template_4.png')->resize(750, 393);
 
 // ‐‐‐‐‐‐‐‐‐――――――――――――――――
 // 商品画像のサイズを指定して、加工する画像の上に重ねる
@@ -394,17 +389,17 @@ use Intervention\Image\Facades\Image;
             $width = 1;
             $height = 1;
             
-            $image1 = Image::make($img1)->fit(265, 265);
-            $image2 = Image::make($img2)->fit(194, 194);
-            $image3 = Image::make($img3)->fit(278, 278);
-            $image4 = Image::make($img4)->fit(216, 216);
+            $image1 = Image::make($img1)->fit(163, 163);
+            $image2 = Image::make($img2)->fit(122, 122);
+            $image3 = Image::make($img3)->fit(172, 172);
+            $image4 = Image::make($img4)->fit(136, 136);
             // $image5 = Image::make($img5)->fit($width, $height);
             // $image6 = Image::make($img6)->fit($width, $height);
 
-            $img->insert( $image1, 'top-left', 94, 64);
-            $img->insert( $image2, 'top-left', 453, 13);
-            $img->insert( $image3, 'top-left', 613, 289);
-            $img->insert( $image4, 'top-left', 947, 226);
+            $img->insert( $image1, 'top-left', 59, 43);
+            $img->insert( $image2, 'top-left', 283, 8);
+            $img->insert( $image3, 'top-left', 384, 181);
+            $img->insert( $image4, 'top-left', 591, 141);
             // $img->insert( $image5, 'top-left', 900, 310);
             // $img->insert( $image6, 'top-left', 900, 10);
 
@@ -412,22 +407,22 @@ use Intervention\Image\Facades\Image;
 // 投稿テキストを加工する画像の上に重ねる
 // ‐‐‐‐‐‐‐‐‐――――――――――――――――
             // 長めの文章を指定文字数で分割する
-            $max_len = 11;
+            $max_len = 12;
             $lines = self::mb_wordwrap($title, $max_len);
 
             // 妄想コーデテーマ追加
-            $img ->text($lines, 81, 498, function($font) {
+            $img ->text($lines, 50, 311, function($font) {
                 $font->file('assets/font/KosugiMaru-Regular.ttf'); // フォントファイル
-                $font->size(40); // 文字サイズ
+                $font->size(22); // 文字サイズ
                 $font->align('left'); // 横の揃え方（left, center, right）
                 $font->valign('middle');  // 縦の揃え方（top, middle, bottom）
-                $font->color('#332118');  // 文字の色
+                $font->color('#332118');  // 文cd 字の色
             });
             
             // ニックネーム追加
-            $img ->text($who, 260, 377, function($font) {
+            $img ->text($who, 162, 235, function($font) {
                 $font->file('assets/font/KosugiMaru-Regular.ttf'); // フォントファイル
-                $font->size(26); // 文字サイズ
+                $font->size(17); // 文字サイズ
                 $font->align('center'); // 横の揃え方（left, center, right）
                 $font->valign('top');  // 縦の揃え方（top, middle, bottom）
                 $font->color('#fff');  // 文字の色
@@ -437,37 +432,126 @@ use Intervention\Image\Facades\Image;
 // カテゴリを加工する画像の上に重ねる
 // ‐‐‐‐‐‐‐‐‐――――――――――――――――
 
-            $img ->text($genre1, 38, 14, function($font) {
-                $font->file('assets/font/learningcurve_tt.ttf'); // フォントファイル
-                $font->size(90); // 文字サイズ
+            $img ->text($genre1, 24, 7, function($font) {
+                $font->file('assets/font/BadScript-Regular.ttf'); // フォントファイル
+                $font->size(45); // 文字サイズ
                 $font->align('left'); // 横の揃え方（left, center, right）
                 $font->valign('top');  // 縦の揃え方（top, middle, bottom）
-                $font->color('#332118');  // 文字の色
+                $font->color('#7E6558');  // 文字の色
             });
             
-            $img ->text($genre2, 390, 216, function($font) {
-                $font->file('assets/font/learningcurve_tt.ttf'); // フォントファイル
-                $font->size(78); // 文字サイズ
+            $img ->text($genre2, 244, 135, function($font) {
+                $font->file('assets/font/BadScript-Regular.ttf'); // フォントファイル
+                $font->size(37); // 文字サイズ
                 $font->align('left'); // 横の揃え方（left, center, right）
                 $font->valign('top');  // 縦の揃え方（top, middle, bottom）
-                $font->color('#332118');  // 文字の色
+                $font->color('#7E6558');  // 文字の色
             });
             
-            $img ->text($genre3, 600, 550, function($font) {
-                $font->file('assets/font/learningcurve_tt.ttf'); // フォントファイル
-                $font->size(80); // 文字サイズ
+            $img ->text($genre3, 375, 340, function($font) {
+                $font->file('assets/font/BadScript-Regular.ttf'); // フォントファイル
+                $font->size(35); // 文字サイズ
                 $font->align('left'); // 横の揃え方（left, center, right）
                 $font->valign('top');  // 縦の揃え方（top, middle, bottom）
-                $font->color('#332118');  // 文字の色
+                $font->color('#7E6558');  // 文字の色
             });
             
-            $img ->text($genre4, 936, 445, function($font) {
-                $font->file('assets/font/learningcurve_tt.ttf'); // フォントファイル
-                $font->size(74); // 文字サイズ
+            $img ->text($genre4, 585, 278, function($font) {
+                $font->file('assets/font/BadScript-Regular.ttf'); // フォントファイル
+                $font->size(34); // 文字サイズ
                 $font->align('left'); // 横の揃え方（left, center, right）
                 $font->valign('top');  // 縦の揃え方（top, middle, bottom）
-                $font->color('#332118');  // 文字の色
+                $font->color('#7E6558');  // 文字の色
             });
+
+
+
+
+// // ‐‐‐‐‐‐‐‐‐――――――――――――――――
+// // 加工する画像のパスを指定する
+// // ‐‐‐‐‐‐‐‐‐――――――――――――――――
+//             $img = Image::make('assets/img/template_4.png')->resize(1200, 628);
+
+// // ‐‐‐‐‐‐‐‐‐――――――――――――――――
+// // 商品画像のサイズを指定して、加工する画像の上に重ねる
+// // ‐‐‐‐‐‐‐‐‐――――――――――――――――            
+//             $width = 1;
+//             $height = 1;
+            
+//             $image1 = Image::make($img1)->fit(265, 265);
+//             $image2 = Image::make($img2)->fit(194, 194);
+//             $image3 = Image::make($img3)->fit(278, 278);
+//             $image4 = Image::make($img4)->fit(216, 216);
+//             // $image5 = Image::make($img5)->fit($width, $height);
+//             // $image6 = Image::make($img6)->fit($width, $height);
+
+//             $img->insert( $image1, 'top-left', 94, 64);
+//             $img->insert( $image2, 'top-left', 453, 13);
+//             $img->insert( $image3, 'top-left', 613, 289);
+//             $img->insert( $image4, 'top-left', 947, 226);
+//             // $img->insert( $image5, 'top-left', 900, 310);
+//             // $img->insert( $image6, 'top-left', 900, 10);
+
+// // ‐‐‐‐‐‐‐‐‐――――――――――――――――
+// // 投稿テキストを加工する画像の上に重ねる
+// // ‐‐‐‐‐‐‐‐‐――――――――――――――――
+//             // 長めの文章を指定文字数で分割する
+//             $max_len = 11;
+//             $lines = self::mb_wordwrap($title, $max_len);
+
+//             // 妄想コーデテーマ追加
+//             $img ->text($lines, 81, 498, function($font) {
+//                 $font->file('assets/font/KosugiMaru-Regular.ttf'); // フォントファイル
+//                 $font->size(38); // 文字サイズ
+//                 $font->align('left'); // 横の揃え方（left, center, right）
+//                 $font->valign('middle');  // 縦の揃え方（top, middle, bottom）
+//                 $font->color('#332118');  // 文cd 字の色
+//             });
+            
+//             // ニックネーム追加
+//             $img ->text($who, 260, 377, function($font) {
+//                 $font->file('assets/font/KosugiMaru-Regular.ttf'); // フォントファイル
+//                 $font->size(26); // 文字サイズ
+//                 $font->align('center'); // 横の揃え方（left, center, right）
+//                 $font->valign('top');  // 縦の揃え方（top, middle, bottom）
+//                 $font->color('#fff');  // 文字の色
+//             });
+            
+// // ‐‐‐‐‐‐‐‐‐――――――――――――――――
+// // カテゴリを加工する画像の上に重ねる
+// // ‐‐‐‐‐‐‐‐‐――――――――――――――――
+
+//             $img ->text($genre1, 38, 14, function($font) {
+//                 $font->file('assets/font/BadScript-Regular.ttf'); // フォントファイル
+//                 $font->size(70); // 文字サイズ
+//                 $font->align('left'); // 横の揃え方（left, center, right）
+//                 $font->valign('top');  // 縦の揃え方（top, middle, bottom）
+//                 $font->color('#7E6558');  // 文字の色
+//             });
+            
+//             $img ->text($genre2, 390, 216, function($font) {
+//                 $font->file('assets/font/BadScript-Regular.ttf'); // フォントファイル
+//                 $font->size(60); // 文字サイズ
+//                 $font->align('left'); // 横の揃え方（left, center, right）
+//                 $font->valign('top');  // 縦の揃え方（top, middle, bottom）
+//                 $font->color('#7E6558');  // 文字の色
+//             });
+            
+//             $img ->text($genre3, 600, 550, function($font) {
+//                 $font->file('assets/font/BadScript-Regular.ttf'); // フォントファイル
+//                 $font->size(62); // 文字サイズ
+//                 $font->align('left'); // 横の揃え方（left, center, right）
+//                 $font->valign('top');  // 縦の揃え方（top, middle, bottom）
+//                 $font->color('#7E6558');  // 文字の色
+//             });
+            
+//             $img ->text($genre4, 936, 445, function($font) {
+//                 $font->file('assets/font/BadScript-Regular.ttf'); // フォントファイル
+//                 $font->size(56); // 文字サイズ
+//                 $font->align('left'); // 横の揃え方（left, center, right）
+//                 $font->valign('top');  // 縦の揃え方（top, middle, bottom）
+//                 $font->color('#7E6558');  // 文字の色
+//             });
 
 
 

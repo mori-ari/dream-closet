@@ -14,64 +14,26 @@ use Carbon\Carbon;
 
 
     
-    //=======================================================================
+//=======================================================================
     class ItemsController extends Controller
     {
-        /**
-         * Display a listing of the resource.
-         *
-         * @return \Illuminate\View\View
-         */
-     public function index(Request $request)
-        {
-            $keyword = $request->get("search");
-            $perPage = 1000;
-    
-            if (!empty($keyword)) {
-                
-				// ----------------------------------------------------
-				// -- QueryBuilder: SELECT [items]--
-				// ----------------------------------------------------
-				$item = DB::table("items")
-				->orWhere("items.itemCode", "LIKE", "%$keyword%")->orWhere("items.url", "LIKE", "%$keyword%")->orWhere("items.img", "LIKE", "%$keyword%")->orWhere("items.price", "LIKE", "%$keyword%")->orWhere("items.genreId", "LIKE", "%$keyword%")->orWhere("items.genreName", "LIKE", "%$keyword%")->orWhere("items.colorId", "LIKE", "%$keyword%")->orWhere("items.colorName", "LIKE", "%$keyword%")->orWhere("items.shopName", "LIKE", "%$keyword%")->orWhere("items.shopUrl", "LIKE", "%$keyword%")->orWhere("items.itemName", "LIKE", "%$keyword%")->orWhere("items.caption", "LIKE", "%$keyword%")->select("*")->addSelect("items.id")->paginate($perPage);
-            } else {
-                    //$item = Item::paginate($perPage);
-				// ----------------------------------------------------
-				// -- QueryBuilder: SELECT [items]--
-				// ----------------------------------------------------
-				$item = DB::table("items")
-				->select("*")->addSelect("items.id")->paginate($perPage);              
-            }          
-            return view("item.index", compact("item"));
-        }
-    
-        /**
-         * Show the form for creating a new resource.
-         *
-         * @return \Illuminate\View\View
-         */
-        public function create()
-        {
+  
     // -------------------
-    // 楽天
+    // 楽天1:apartbylowrys
     // -------------------
-
+        public function apartbylowrys()
+        {
         //楽天APIを扱うRakutenRws_Clientクラスのインスタンスを作成
         $client = new RakutenRws_Client();
-
         //定数化
         define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
         define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
         define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
-
         $client->setApplicationId(RAKUTEN_APPLICATION_ID);
         $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
-        // 認証が必要な場合
-        // $client->setSecret(RAKUTEN_APPLICATION_SEACRET);
         //処理時間無制限に設定　https://www.freemen.jp/sys/php/679
         set_time_limit(0);
         ini_set('max_execution_time', 0);
-        // -------------------------------------------------------------
 
         $genreArrey = [
             '555086',
@@ -92,97 +54,90 @@ use Carbon\Carbon;
             '100486',
             ];
             
-
-
         $shopArrey= [
-            // 'apartbylowrys',
+            'apartbylowrys'
             // 'bcstock',
             // 'beams',
             // 'beams-outlet',
             // 'beautyandyouth',
             // 'coen',
             // 'converse',
-            'ehyphen',
-            'earth1999',
-            'ete-store',
-            'frayid',
-            'freesmart',
-            'globalwork',
-            'heather',
-            'shop-ined',
-            'ingni-shop',
-            'jeanasis',
-            'jadorejunonline',
-            'jillbyjillstuart',
-            'jillstuart',
-            'jouete-store',
-            'katespadenewyork',
-            'kbf-rba',
-            'kumikyoku',
-            'lilybrown',
-            'lowrysfarm',
-            'mackintoshlondon',
-            'mackintoshphilosophy',
-            'majesticlegon',
-            'milaowen',
-            'milkfed',
-            'mystywoman-shop',
-            'nano-universe',
-            'naturalbeautybasic',
-            'nikoand',
-            'odetteeodile',
-            'pageboy-shop',
-            'palgroupoutlet',
-            'pinkyanddianne',
-            'proportionbodydressing',
-            'shop-raycassin',
-            'ropepicnic',
-            'rosebud',
-            'sm2-can',
-            'samanthathavasa',
-            'sanyoselect',
-            'sheltter-webstore',
-            'ships',
-            'snidel',
-            'thevirgnia',
-            'unitedarrows',
-            'greenlabelrelaxing',
-            'unitedarrowsltdoutlet',
-            'doors-rba',
-            'ur-rba',
-            'ur-items',
-            'rosso-rba',
-            'usonlinestore',
-            'usagi-online',
-            'vis-jun',
-            'xgirl'
+            // 'ehyphen',
+            // 'earth1999',
+            // 'ete-store',
+            // 'frayid',
+            // 'freesmart',
+            // 'globalwork',
+            // 'heather',
+            // 'shop-ined',
+            // 'ingni-shop',
+            // 'jeanasis',
+            // 'jadorejunonline', 
+            // 'jillbyjillstuart',
+            // 'jillstuart',
+            // 'jouete-store',
+            // 'katespadenewyork',
+            // 'kbf-rba',
+            // 'kumikyoku',
+            // 'lilybrown',
+            // 'lowrysfarm',
+            // 'mackintoshlondon',
+            // 'mackintoshphilosophy',
+            // 'majesticlegon',
+            // 'milaowen',
+            // 'milkfed',
+            // 'mystywoman-shop',
+            // 'nano-universe',
+            // 'naturalbeautybasic',
+            // 'nikoand',
+            // 'odetteeodile',
+            // 'pageboy-shop',
+            // 'palgroupoutlet',
+            // 'pinkyanddianne',
+            // 'proportionbodydressing',
+            // 'shop-raycassin',
+            // 'ropepicnic',
+            // 'rosebud',
+            // 'sm2-can', 
+            // 'samanthathavasa',
+            // 'sanyoselect',
+            // 'sheltter-webstore',
+            // 'ships',
+            // 'snidel',
+            // 'thevirgnia',
+            // 'unitedarrows',
+            // 'greenlabelrelaxing',
+            // 'unitedarrowsltdoutlet',
+            // 'doors-rba',
+            // 'ur-rba',
+            // 'ur-items',
+            // 'rosso-rba',
+            // 'usonlinestore',
+            // 'usagi-online',
+            // 'vis-jun',
+            // 'xgirl'
         ];
     
         foreach ($shopArrey as $key => $shopCode) {        
             foreach ($genreArrey as $key => $genreId) {
-                
                 $maxpage =1;
-        
                 for($i=1; $i<=$maxpage; $i++){
                             $response[] = $client->execute('IchibaItemSearch', array(
                               'shopCode' => $shopCode,
                               'genreId' => $genreId,
                               'page' => $i,        
-                              'hits' => 30,
+                              'hits' => 10,
                               'imageFlag' => 1,
                             ));
                             }
-                
                  foreach ($response as $key => $val) {
                         // レスポンスが正しいかを isOk() で確認することができます
                         // if (! $response->isOk()) {
                         //     return'Error:'.$response->getMessage();
                         // } else {
-                        
                             foreach ($val as $item){
                                 //画像サイズを変えたかったのでURLを整形します
                                 $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
-                                      
                                 Item::updateOrCreate(
                                     ['itemCode' => $item['itemCode']],
                                     [
@@ -199,17 +154,3700 @@ use Carbon\Carbon;
                             }
                         // }
                     }
-
-                    
             }
         }
+    }
+        
+// -------------------
+// 楽天2 bcstock
+// -------------------       
+    public function bcstock()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'bcstock',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }
+    
+    
+// -------------------
+// 楽天3 beams
+// -------------------       
+    public function beams()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'beams',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }
+
+// -------------------
+// 楽天4 beams-outlet
+// -------------------       
+    public function beamsoutlet()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'beams-outlet',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }
+
+// -------------------
+// 楽天5 beautyandyouth
+// -------------------       
+    public function beautyandyouth()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'beautyandyouth',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }
+
+// -------------------
+// 楽天6 coen
+// -------------------       
+    public function coen()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'coen',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }
+
+// -------------------
+// 楽天7 converse
+// -------------------       
+    public function converse()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'converse',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }
+
+// -------------------
+// 楽天8 ehyphen
+// -------------------       
+    public function ehyphen()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'ehyphen',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }
+// -------------------
+// 楽天9 earth1999
+// -------------------       
+    public function earth1999()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'earth1999',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }
+// -------------------
+// 楽天10 ete-store
+// -------------------       
+    public function etestore()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'ete-store',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
 
 
 
-        }
-                
+// -------------------
+// 楽天11　frayid
+// -------------------       
+    public function frayid()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'frayid',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+    
 
+
+// -------------------
+// 楽天12  freesmart
+// -------------------       
+    public function freesmart()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'freesmart',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+// -------------------
+// 楽天13  globalwork
+// -------------------       
+    public function globalwork()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'globalwork',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+
+
+
+// -------------------
+// 楽天14  heather
+// -------------------       
+    public function heather()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'heather',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+    
+
+
+// -------------------
+// 楽天15  shopined
+// -------------------       
+    public function shopined()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'shop-ined',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+
+// -------------------
+// 楽天16  ingnishop
+// -------------------       
+    public function ingnishop()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'ingni-shop',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+
+ 
+// -------------------
+// 楽天17 jeanasis
+// -------------------       
+    public function jeanasis()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'jeanasis',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+
+
+
+// -------------------
+// 楽天18  jadorejunonline
+// -------------------       
+    public function jadorejunonline()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'jadorejunonline',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+
+
+// -------------------
+// 楽天19  jillbyjillstuart
+// -------------------       
+    public function jillbyjillstuart()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'jillbyjillstuart',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+// -------------------
+// 楽天20  jillstuart
+// -------------------       
+    public function jillstuart()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'jillstuart',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+    
+
+
+// -------------------
+// 楽天21  jouetestore
+// -------------------       
+    public function jouetestore()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'jouete-store',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+
+
+
+   
+// -------------------
+// 楽天22  katespadenewyork
+// -------------------       
+    public function katespadenewyork()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'katespadenewyork',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    } 
+
+
+
+
+
+// -------------------
+// 楽天23  kbfrba
+// -------------------       
+    public function kbfrba()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'kbf-rba',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+
+
+// -------------------
+// 楽天24 kumikyoku
+// -------------------       
+    public function kumikyoku()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'kumikyoku',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+
+
+
+
+// -------------------
+// 楽天25  lilybrown
+// -------------------       
+    public function lilybrown()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'lilybrown',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+
+
+
+// -------------------
+// 楽天26  lowrysfarm
+// -------------------       
+    public function lowrysfarm()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'lowrysfarm',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+
+
+// -------------------
+// 楽天27  mackintoshlondon
+// -------------------       
+    public function mackintoshlondon()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'mackintoshlondon',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+
+
+
+
+// -------------------
+// 楽天28 mackintoshphilosophy
+// -------------------       
+    public function mackintoshphilosophy()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'mackintoshphilosophy',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+  
+
+
+// -------------------
+// 楽天29  majesticlegon
+// -------------------       
+    public function majesticlegon()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'majesticlegon',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+
+
+// -------------------
+// 楽天30 milaowen
+// -------------------       
+    public function milaowen()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'milaowen',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+    
+            
+
+
+// -------------------
+// 楽天31  milkfed
+// -------------------       
+    public function milkfed()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'milkfed',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    } 
+    
+            
+// -------------------
+// 楽天32  mystywoman-shop
+// -------------------       
+    public function mystywomanshop()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'mystywoman-shop',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+// -------------------
+// 楽天33  nano-universe
+// -------------------       
+    public function nanouniverse()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'nano-universe',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    } 
+    
+
+
+    // -------------------
+// 楽天34  naturalbeautybasi
+// -------------------       
+    public function naturalbeautybasic()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'naturalbeautybasic',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+    
+        
+
+// -------------------
+// 楽天35  nikoand
+// -------------------       
+    public function nikoand()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'nikoand',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    } 
+    
+    
+        
+            
+    // -------------------
+// 楽天36  odetteeodile
+// -------------------       
+    public function odetteeodile()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'odetteeodile',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+    
+    
+    // -------------------
+// 楽天37  pageboy-shop
+// -------------------       
+    public function pageboyshop()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'pageboy-shop',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+    
+   
            
+
+    // -------------------
+// 楽天38  palgroupoutlet
+// -------------------       
+    public function palgroupoutlet()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'palgroupoutlet',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+    
+
+    // -------------------
+// 楽天39  pinkyanddianne
+// -------------------       
+    public function pinkyanddianne()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'pinkyanddianne',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+    
+    
+    
+            
+// -------------------
+// 楽天40  proportionbodydressing
+// -------------------       
+    public function proportionbodydressing()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'proportionbodydressing',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+    
+    
+    
+           
+            
+// -------------------
+// 楽天41  shop-raycassin
+// -------------------       
+    public function shopraycassin()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'shop-raycassin',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+   
+            
+   
+    // -------------------
+// 楽天42  ropepicnic
+// -------------------       
+    public function ropepicnic()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'ropepicnic',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+ 
+    // -------------------
+// 楽天43  rosebud
+// -------------------       
+    public function rosebud()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'rosebud',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+            
+
+    // -------------------
+// 楽天44  sm2-can
+// -------------------       
+    public function sm2can()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'sm2-can',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+            
+    // -------------------
+// 楽天45  samanthathavasa
+// -------------------       
+    public function samanthathavasa()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'samanthathavasa',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+    
+    // -------------------
+// 楽天46  sanyoselect
+// -------------------       
+    public function sanyoselect()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'sanyoselect',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+
+    // -------------------
+// 楽天47  sheltter-webstore
+// -------------------       
+    public function sheltterwebstore()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'sheltter-webstore',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+        
+            
+    // -------------------
+// 楽天48  ships
+// -------------------       
+    public function ships()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'ships',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+
+            
+    // -------------------
+// 楽天49  snidel
+// -------------------       
+    public function snidel()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'snidel',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }  
+    
+     
+    // -------------------
+// 楽天50  thevirgnia
+// -------------------       
+    public function thevirgnia()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'thevirgnia',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }     
+
+
+    // -------------------
+// 楽天51  unitedarrows
+// -------------------       
+    public function unitedarrows()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'unitedarrows',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }     
+           
+            
+            
+    // -------------------
+// 楽天52  greenlabelrelaxing
+// -------------------       
+    public function greenlabelrelaxing()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'greenlabelrelaxing',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }     
+
+            
+    // -------------------
+// 楽天53  unitedarrowsltdoutlet
+// -------------------       
+    public function unitedarrowsltdoutlet()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'unitedarrowsltdoutlet',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }     
+
+          
+    // -------------------
+// 楽天54  doors-rba
+// -------------------       
+    public function doorsrba()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'doors-rba',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }     
+
+            
+    // -------------------
+// 楽天55 ur-rba
+// -------------------       
+    public function urrba()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'ur-rba',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }     
+
+        
+    // -------------------
+// 楽天56  ur-items
+// -------------------       
+    public function uritems()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'ur-items',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }     
+    
+            
+    // -------------------
+// 楽天57  rosso-rba
+// -------------------       
+    public function rossorba()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'rosso-rba',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }     
+
+     
+    // -------------------
+// 楽天58  usonlinestore
+// -------------------       
+    public function usonlinestore()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'usonlinestore',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }     
+     
+            
+    // -------------------
+// 楽天59 usagi-online
+// -------------------       
+    public function usagionline()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'usagi-online',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }     
+
+            
+           
+    // -------------------
+// 楽天60  vis-jun
+// -------------------       
+    public function visjun()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'vis-jun',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }     
+
+    // -------------------
+// 楽天61  xgirl
+// -------------------       
+    public function xgirl()
+    {
+        $client = new RakutenRws_Client();
+        define("RAKUTEN_APPLICATION_ID", config('app.rakuten_id'));
+        define("RAKUTEN_APPLICATION_SEACRET", config('app.rakuten_key'));
+        define("RAKUTEN_AFFILIATE_ID", config('app.rakuten_aff'));
+        $client->setApplicationId(RAKUTEN_APPLICATION_ID);
+        $client->setAffiliateId(RAKUTEN_AFFILIATE_ID);
+        set_time_limit(0);
+        ini_set('max_execution_time', 0);
+        $genreArrey = [
+            '555086',
+            '555089',
+            '110729',
+            '555083',
+            '555087',
+            '100480',
+            '110933',
+            '110974',
+            '403732',
+            '207204',
+            '110894',
+            '560100',
+            '403755',
+            '403762',
+            '207306',
+            '100486',
+            ];
+            foreach ($genreArrey as $key => $genreId) {
+                            $response[] = $client->execute('IchibaItemSearch', array(
+                              'shopCode' => 'xgirl',
+                              'genreId' => $genreId,
+                              'page' => 1,        
+                              'hits' => 30,
+                              'imageFlag' => 1,
+                            ));
+                 foreach ($response as $key => $val) {
+                            foreach ($val as $item){
+                                  $str = str_replace("_ex=128x128", "_ex=300x300", $item['mediumImageUrls'][0]['imageUrl']);
+                                Item::updateOrCreate(
+                                    ['itemCode' => $item['itemCode']],
+                                    [
+                                        'url' => $item['itemUrl'],
+                                        'img' => $str,
+                                        'price' => $item['itemPrice'],
+                                        'genreId' => $item['genreId'],
+                                        'shopName' => $item['shopName'],
+                                        'shopUrl' => $item['shopUrl'],
+                                        'itemName' => $item['itemName'],
+                                        'caption' => $item['itemCaption'],
+                                    ]
+                                );
+                            }
+                        }
+            }
+    }     
+
 // ‐‐‐‐‐‐‐‐‐――――――――――――――――
 // カテゴリメモ
 // ‐‐‐‐‐‐‐‐‐――――――――――――――――
@@ -232,152 +3870,6 @@ use Carbon\Carbon;
 // 207306	レディースベルト 8
 // 100486	レディースジュエリー・アクセサリー 9
 
-// ----------
-// genreLevel: 1,
-// genreName: レディースファッション,
-// genreId: 100371
-// genreLevel: 2, 0～210件 507～790件　283件(8P～100)
-// ----------
 
-// genreName: トップス,->Tops
-// genreId: 555086
-
-// genreName: ボトムス,->Bottoms
-// genreId: 555089
-
-// genreName: コート・ジャケット,->Outer
-// genreId: 555087
-
-// genreName: ワンピース,->One-piece
-// genreId: 110729
-
-// genreName: オールインワン・サロペット,->All-in-one
-// genreId: 555083
-
-// ----------
-// genreLevel: 1,
-// ----------
-// genreName: 靴,->Shoes　※coca見ると216141というジャンルで出てくる
-// genreId: 558885　210～212件　2件
-
-// "genreName": "レディース靴",
-//         "genreId": 100480
-//         "genreName": "メンズ靴",
-//         "genreId": 110983
-//         "genreName": "靴ケア用品・アクセサリー",
-//         "genreId": 216172
-//         "genreName": "その他",
-//         "genreId": 559278
-        
-
-// genreName: バッグ・小物・ブランド雑貨->Accessory
-// genreId: 216131　212～267件　55件
-
-// genreName: ジュエリー・アクセサリー,->Jewelry
-// genreId: 216129 267～507件　240件
-    // "genreLevel": 2,
-    // "genreName": "レディースジュエリー・アクセサリー",
-    // "genreId": 100486
-    // shopCode：ete-store
-
-// ‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
-    
-        /**
-         * Store a newly created resource in storage.
-         *
-         * @param \Illuminate\Http\Request $request
-         *
-         * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-         */
-        // public function store(Request $request)
-        // {
-   
-
-        //         return redirect("item")->with("flash_message", "item added!");
-        // }
-    
-        /**
-         * Display the specified resource.
-         *
-         * @param  int  $id
-         *
-         * @return \Illuminate\View\View
-         */
-    //     public function show($id)
-    //     {
-    //         // $item = Item::findOrFail($id);
-            
-				// // ----------------------------------------------------
-				// // -- QueryBuilder: SELECT [items]--
-				// // ----------------------------------------------------
-				// // $item = DB::table("items")　//stdClassエラー回避のためコメントアウトし下記1行追加
-				// $item = Item::query()
-				// ->select("*")->addSelect("items.id")->where("items.id",$id)->first();
-    //         return view("item.show", compact("item"));
-    //     }
-    
-        /**
-         * Show the form for editing the specified resource.
-         *
-         * @param  int  $id
-         *
-         * @return \Illuminate\View\View
-         */
-    //     public function edit($id)
-    //     {
-    //         $item = Item::findOrFail($id);
-    
-    //         return view("item.edit", compact("item"));
-    //     }
-    
-    //     /**
-    //      * Update the specified resource in storage.
-    //      *
-    //      * @param  int  $id
-    //      * @param \Illuminate\Http\Request $request
-    //      *
-    //      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-    //      */
-    //     public function update(Request $request, $id)
-    //     {
-    //         $this->validate($request, [
-			 //// "itemCode" => "required|integer", //integer('itemCode')
-				// "itemCode" => "nullable", ///string('itemCode')
-				// "url" => "nullable", //text('url')->nullable()
-				// "img" => "nullable", //text('img')->nullable()
-				// "price" => "nullable|integer", //integer('price')->nullable()
-				// "genreId" => "nullable|integer", //integer('genreId')->nullable()
-				// "genreName" => "nullable", //string('genreName')->nullable()
-				// "colorId" => "nullable|integer", //integer('colorId')->nullable()
-				// "colorName" => "nullable", //string('colorName')->nullable()
-				// "shopName" => "nullable", //string('shopName')->nullable()
-				// "shopUrl" => "nullable", //text('shopUrl')->nullable()
-				// "itemName" => "nullable", //text('itemName')->nullable()
-				// "caption" => "nullable", //text('caption')->nullable()
-
-    //         ]);
-    //         $requestData = $request->all();
-            
-    //         $item = Item::findOrFail($id);
-    //         $item->update($requestData);
-    
-    //         return redirect("item")->with("flash_message", "item updated!");
-    //     }
-    
-    //     /**
-    //      * Remove the specified resource from storage.
-    //      *
-    //      * @param  int  $id
-    //      *
-    //      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-    //      */
-    //     public function destroy($id)
-    //     {
-    //         Item::destroy($id);
-    
-    //         return redirect("item")->with("flash_message", "item deleted!");
-    //     }
-    }
-    //=======================================================================
-    
-    
+}
+  

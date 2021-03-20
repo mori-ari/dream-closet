@@ -1,9 +1,10 @@
 <?php
 $who=$post->who;
+$title=$post->title;
 ?>
 @extends("layouts.app")
-@section('title', $who.'が妄想コーデを | #私の妄想コーデ')
-@section('description', $who.'が作成した妄想コーデをCheck！あなたも妄想コーデを作成しませんか？')
+@section('title', $who.'が選ぶ #私の妄想コーデ')
+@section('description', $who.'の'.$title)
 @section('url')post/{{ $post->uid }}@endsection
 @section('ogimage'){{ $post->uid }}@endsection
 
@@ -15,9 +16,9 @@ $who=$post->who;
 <img src="/storage/img/{{ $post->uid }}.png" id="output"> 
 </div>
 
-<div class="tw">
+<div class="tw tw-bg">
 <div class="tw-box">
-<div class="tw-txt">作成した妄想コーデを<br class="br-sp" />Twitterでシェア！</div>
+<div class="tw-txt">この妄想コーデを<br class="br-sp414" />Twitterでシェア！</div>
 <div class="tw-bt">
 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-lang="jp" data-size="large" data-via="dreamCloset_jp" data-show-count="false" target="_blank"></a>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -25,50 +26,86 @@ $who=$post->who;
 </div>
 </div>
 
-<!--<div id="bt-tw">Twitterでシェア</div>-->
 
+
+<div class="wrapper">
 <div class="list">
 
 <a href="{{ $post->url1}}" target="_blank">
 <div class="polaroid">
-    <p class="price_l">¥{{ $post->price1}}</p>
+    <p id="price_1" class="price_l">¥{{ $post->price1}}</p>
     <img src="{{ $post->img1}}" />
-    <!--<div class="circle"></div>-->
-    <!--<div class="circle_l"></div>-->
+    <div class="circle"></div>
+    <div class="circle_l"></div>
     <!--<div class="check">Check→</div>-->
+    <div class="check">{{ $post->genre1}}</div>
+</div>
+<div class="bt-area">
+    <a href="{{ $post->url1}}" target="_blank"><button class="bt-w">商品詳細</button></a>
 </div>
 </a>
 
+
 <a href="{{ $post->url2}}" target="_blank">
 <div class="polaroid-even">
-  <p class="price_l-even">¥{{ $post->price2}}</p>
+  <p id="price_2" class="price_l-even">¥{{ $post->price2}}</p>
   <img src="{{ $post->img2}}" />
-  <!--<div class="circle-even"></div>-->
-  <!--<div class="circle_l-even"></div>-->
+  <div class="circle-even"></div>
+  <div class="circle_l-even"></div>
   <!--<div class="check-even">Check→</div>-->
+  <div class="check-even">{{ $post->genre2}}</div>
+</div>
+<div class="bt-area-even">
+    <a href="{{ $post->url2}}" target="_blank"><button class="bt-w">商品詳細</button></a>
 </div>
 </a>
 
 <a href="{{ $post->url3}}" target="_blank">
 <div class="polaroid">
-  <p class="price_l">¥{{ $post->price3}}</p>
+  <p id="price_3" class="price_l">¥{{ $post->price3}}</p>
   <img src="{{ $post->img3}}" />
-  <!--<div class="circle"></div>-->
-  <!--<div class="circle_l"></div>-->
+  <div class="circle"></div>
+  <div class="circle_l"></div>
   <!--<div class="check">Check→</div>-->
+  <div class="check">{{ $post->genre3}}</div>
+</div>
+<div class="bt-area">
+    <a href="{{ $post->url3}}" target="_blank"><button class="bt-w">商品詳細</button></a>
 </div>
 </a>
 
 <a href="{{ $post->url4}}" target="_blank">
 <div class="polaroid-even">
-  <p class="price_l-even">¥{{ $post->price4}}</p>
+  <p id="price_4" class="price_l-even">¥{{ $post->price4}}</p>
   <img src="{{ $post->img4}}" />
-  <!--<div class="circle-even"></div>-->
-  <!--<div class="circle_l-even"></div>-->
+  <div class="circle-even"></div>
+  <div class="circle_l-even"></div>
   <!--<div class="check-even">Check→</div>-->
+  <div class="check-even">{{ $post->genre4}}</div>
+</div>
+<div class="bt-area-even">
+    <a href="{{ $post->url4}}" target="_blank"><button class="bt-w">商品詳細</button></a>
 </div>
 </a>
 
+</div>
+
+
+
+<small class="kome">
+  <li>価格は作成時の情報を表示しています。最新の商品情報は商品詳細をご確認ください。</li>
+  <li>商品画像や商品詳細ページが表示されない場合は販売が終了している可能性がございます。</li>
+  <li>商品に関するご質問は各ショップへお問い合わせください。</li>
+</small>
+
+<div class="tw">
+<div class="tw-box">
+<div class="tw-txt">この妄想コーデを<br class="br-sp414" />Twitterでシェア！</div>
+<div class="tw-bt">
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-lang="jp" data-size="large" data-via="dreamCloset_jp" data-show-count="false" target="_blank"></a>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</div>
 </div>
 
 <a href="{{ url("post/") }}"><button class="bt">妄想コーデを作成する</button></a>
@@ -79,57 +116,6 @@ $who=$post->who;
         
 </main>        
         
-        
-        
-          <!-- <br><br><br><br><br><br><br><br><br>     -->
-          <!--  <div class="container">-->
-          <!--      <div class="row">-->
-          <!--          <div class="col-md-12">-->
-          <!--              <div class="panel panel-default">-->
-          <!--                  <div class="panel-heading">post {{ $post->uid }}</div>-->
-          <!--                  <div class="panel-body">-->
 
-          <!--                      <a href="{{ url("post") }}" title="Back"><button class="btn btn-warning btn-xs">Back</button></a>-->
-          <!--                      <a href="{{ url("post") ."/". $post->uid . "/edit" }}" title="Edit post"><button class="btn btn-primary btn-xs">Edit</button></a>-->
-          <!--                      <form method="POST" action="/post/{{ $post->uid }}" class="form-horizontal" style="display:inline;">-->
-          <!--                              {{ csrf_field() }}-->
-          <!--                              {{ method_field("delete") }}-->
-          <!--                              <button type="submit" class="btn btn-danger btn-xs" title="Delete User" onclick="return confirm('Confirm delete')">-->
-          <!--                              Delete-->
-          <!--                              </button>    -->
-          <!--                  </form>-->
-
-
-                            
-                            
-
-                            
-                            
-          <!--                  <div class="table-responsive">-->
-          <!--                      <table class="table table-borderless">-->
-          <!--                          <tbody>-->
-										<!--<tr><th>id</th><th>uid</th><th>title</th><th>img1</th><th>img2</th><th>img3</th><th>img4</th><th>img5</th><th>img6</th></tr>-->
-										<!--<tr>-->
-										<!--    <td>{{$post->id}} </td>-->
-										<!--    <td>{{$post->uid}} </td>-->
-										<!--    <td>{{$post->title}} </td>-->
-										<!--    <td><a href="{{ $post->url1}}"><image src="{{ $post->img1}}" style="width:70px"><br>{{ $post->price1}}</a></td>-->
-										<!--    <td><a href="{{ $post->url2}}"><image src="{{ $post->img2}}" style="width:70px"><br>{{ $post->price2}}</a></td>-->
-										<!--    <td><a href="{{ $post->url3}}"><image src="{{ $post->img3}}" style="width:70px"><br>{{ $post->price3}}</a></td>-->
-										<!--    <td><a href="{{ $post->url4}}"><image src="{{ $post->img4}}" style="width:70px"><br>{{ $post->price4}}</a></td>-->
-										<!--    <td><a href="{{ $post->url5}}"><image src="{{ $post->img5}}" style="width:70px"><br>{{ $post->price5}}</a></td>-->
-										<!--    <td><a href="{{ $post->url6}}"><image src="{{ $post->img6}}" style="width:70px"><br>{{ $post->price6}}</a></td>-->
-										<!--</tr>-->
-
-
-          <!--                              </tbody>-->
-          <!--                          </table>-->
-          <!--                      </div>-->
-
-          <!--                  </div>-->
-          <!--              </div>-->
-          <!--          </div>-->
-          <!--      </div>-->
-          <!--  </div>-->
-        @endsection
+@endsection
     
